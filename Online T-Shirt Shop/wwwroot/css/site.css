@@ -1,7 +1,80 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css?family=Trade+Winds&display=swap');
 
-a.navbar-brand {
+html,
+body{
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    width: 100%;
+}
+
+.navbar > .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    margin: 18px 0 10px 80px;
+}
+
+.navbar-collapse {
+    width: 641px;
+    justify-self: center;
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+}
+
+.navbar-right {
+    justify-self: end;
+}
+
+.nav-item {
+    width: auto;
+    font-size: 15px;
+    line-height: 1.4em;
+}
+
+.nav-link {
+    text-decoration: none;
+}
+
+.text-dark {
+    color: black;
+}
+
+.brand-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    background-color: black;
+    text-transform: uppercase;
+    font: normal normal normal 27px/1.4em "Trade Winds", sans-serif;
+    color: white;
+    width: 138px;
+    height: 48px;
+}
+
+.brand-logo > a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.brand-logo {
   white-space: normal;
   text-align: center;
   word-break: break-all;
