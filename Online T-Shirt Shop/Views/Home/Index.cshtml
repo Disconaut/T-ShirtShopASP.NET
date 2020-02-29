@@ -2,17 +2,44 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="flex-row home-page-imgs">
-    <img class="small-img responsive-img" src="~/assets/img/woman.webp" alt="There must be woman"/>
-    <img class="small-img responsive-img" src="~/assets/img/man.webp" alt="There must be man"/>
-    <img class="big-img responsive-img" src="~/assets/img/man_woman.webp" alt="There must be man and woman"/>
-</div>
-<section class="new-arrivals-section">
+<section>
+    <div id="home-page-banner">
+        <h2 class="banner-text">Welcome, to the <span class="brand-logo">V E T O L</span> Shop!</h2>
+    </div>
+    <div class="flex-row home-page-imgs">
+        <img class="small-img responsive-img" src="~/assets/img/woman.webp" alt="There must be woman" />
+        <img class="small-img responsive-img" src="~/assets/img/man.webp" alt="There must be man" />
+        <img class="big-img responsive-img" src="~/assets/img/man_woman.webp" alt="There must be man and woman" />
+    </div>
+</section>
+<section id="new-arrivals-section">
     <div class="section-header">
         <h2>New Arrivals</h2>
         <div class="text-line"></div>
     </div>
-    <table class="shop-table">
-
+    <table id="new-arrivals-table" class="shop-table">
+        <tbody id="new-arrivals-table-body">
+        <tr>
+                
+        </tr>
+        </tbody>
     </table>
+    <button id="add-button" class="primal-button">Add new item</button>
 </section>
+<div id="add-popup" class="popup">
+    <div class="popup-container">
+        <button id="close-add" class="close-button"><i class="fas fa-times"></i></button>
+        <div class="popup-header">
+            <h3>Add new item</h3>
+        </div>
+        <div id="add-form" class="popup-body form-container">
+        <label for="product-name">Name:</label>
+        <input id="product-name" type="text"/>
+        <label for="product-img-path">Image path:</label>
+        <input id="product-img-path"/>
+        <label for="product-price">Price:</label>
+        <input id="product-price" type="number" min="0.01" step="any"/>
+        <button id="accept-button" class="primal-button">OK</button>
+        </div>
+    </div>
+</div>

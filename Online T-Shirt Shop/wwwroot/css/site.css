@@ -9,7 +9,6 @@ body{
 }
 
 body {
-    background-color: whitesmoke;
     font-size: 10px;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -20,7 +19,8 @@ header {
     padding-top: 18px;
     top: 0;
     width: 100%;
-    background-color: inherit;
+    background-color: #ffffff;
+    z-index: 98;
 }
 
 main {
@@ -89,7 +89,7 @@ main {
 }
 
 .brand-logo {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center; 
     background-color: black;
@@ -106,9 +106,9 @@ main {
     transition: color 0.4s ease 0s;
 }
 
-    .brand-logo > a:hover {
-        color: #ff6200;
-    }
+.brand-logo > a:hover {
+    color: #ff6200;
+}
 
 a.brand-logo {
   white-space: normal;
@@ -140,9 +140,31 @@ a.brand-logo {
     align-items: center;
 }
 
-.home-page-imgs {
+#home-page-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 13px;
-    height: 811px;
+    width: 100%;
+    height: 282px;
+    background-color: #ff6200;
+    margin-bottom: 10px; 
+}
+
+.banner-text {
+    color: #ffffff;
+    font-size: 60px;
+    line-height: 1.4em;
+}
+
+.banner-text .brand-logo {
+    width: 307px;
+    height: 107px;
+    font-size: 1em;
+}
+
+.home-page-imgs {
+    height: 517px;
     margin-bottom: 10px;
 }
 
@@ -153,6 +175,7 @@ a.brand-logo {
 .responsive-img {
     object-fit: cover;
     height: 100%;
+    width: 100%;
 }
 
 .small-img {
@@ -163,10 +186,13 @@ a.brand-logo {
     flex: 420;
 }
 
-.new-arrivals-section {
+#new-arrivals-section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 16px;
+    margin-top: 115px;
+    margin-bottom: 40px; 
 }
 
 .section-header {
@@ -179,13 +205,13 @@ a.brand-logo {
     font-size: 110px;
     line-height: normal;
     margin-bottom: 62px;
-    margin-top: 115px;
 }
 
 
 .section-header h2 {
     font-size: inherit;
     margin: 0;
+    z-index: 2;
 }
 
 .text-line {
@@ -194,9 +220,151 @@ a.brand-logo {
     bottom: 25px;
     height: 11px;
     width: 104%;
-    z-index: -1;
+    z-index: 1;
     background-color: #ff6200;
 }
+
+.shop-table {
+    width: 100%;
+}
+
+.shop-table tr {
+    display: flex;
+}
+
+.shop-item-container {
+    padding: 35px;
+    width: calc((100% - 35px * 8) / 4);
+}
+
+.shop-item {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.item-img {
+    order: 1;
+    object-fit: contain;
+    object-position: center;
+    max-width: 100%;
+    max-height: 100%;
+    flex: auto;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    order: 2;
+    padding-top: 15px;
+}
+
+.item-name {
+    order: 1;
+    margin: 0;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.item-price {
+    order: 2;
+    color: #ff6200;
+    display: block;
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.popup {
+    position: fixed;
+    background-color: #555555;
+    background-color: rgba(85, 85, 85, 0.75);
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+}
+
+.popup-container {
+    position: relative;
+    background-color: white;
+    font-size: 22px;
+}
+
+#add-popup > .popup-container {
+    border-radius: 16px;
+}
+
+.popup-header {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 2em;
+    margin-right: 111px;
+    margin-bottom: 25px;
+    border-bottom: 5px solid #ff6200;
+}
+
+.popup-body {
+    margin: 23px;
+}
+
+.popup-header h3 {
+    margin: 0 0 0 8px;
+
+}
+
+.close-button {
+    background: none;
+    position: absolute;
+    border: none;
+    right: 9px;
+    top: 5px;
+    font-size: inherit;
+    color: #a1a1a1;
+    padding: 0;
+}
+
+.close-button:hover {
+    color: #000000;
+}
+
+.form-container {
+    display: grid;
+    padding: 13px;
+    color: #575757;
+}
+
+.form-container label {
+    margin-bottom: 0.6em;
+}
+
+.form-container input {
+    font-size: inherit;
+    margin-bottom: 2.2em;
+    padding-left: 13px;
+    padding-right: 27px;
+    height: 43px;
+}
+
+.primal-button {
+    background-color: #ff6200;
+    background-color: rgba(255,98,0,1);
+    border: none;
+    color: white;
+    line-height: 1.4em;
+    font-size: inherit;
+    padding: 15px 20px;
+}
+
+.primal-button:hover {
+    opacity: 0.6;
+}
+
 
 
 /* Provide sufficient contrast against white background */
@@ -233,7 +401,8 @@ a {
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem #000000;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
