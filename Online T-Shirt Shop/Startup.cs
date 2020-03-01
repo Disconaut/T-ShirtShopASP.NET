@@ -51,6 +51,7 @@ namespace Online_T_Shirt_Shop
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                
             });
         }
     }
