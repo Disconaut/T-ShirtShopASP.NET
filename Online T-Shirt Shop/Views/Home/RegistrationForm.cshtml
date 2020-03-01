@@ -1,0 +1,15 @@
+﻿@page
+@model Online_T_Shirt_Shop.Views.Home.RegistrationFormModel
+@{
+    ViewData["Title"] = "Registration Page";
+}
+<section>
+    <form>
+        <label for="fname"> First Name: </label> <input id="fname" type="text" /><br>
+        <label for="lname"> Last Name: </label> <input id="lname" type="text" /><br>
+        <label> Your gander:</label> <label for="female">male</label><input id="male" type="radio" /> <label for="female">female</label><input id="female" type="radio" /><br>
+        <label for="email">Your E-mail:</label> <input id="email" type="email">
+        <label for="password">Create your password:</label> <input type="password" id="password">
+    </form>
+    <button>Registration</button>
+</section>
