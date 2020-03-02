@@ -191,8 +191,11 @@ a.brand-logo {
     flex-direction: column;
     align-items: center;
     font-size: 16px;
-    margin-top: 115px;
     margin-bottom: 40px; 
+}
+
+.arrivals-margin {
+    margin-top: 115px;
 }
 
 .section-header {
@@ -291,6 +294,7 @@ a.brand-logo {
 }
 
 .popup-container {
+    width: 500px;
     position: relative;
     background-color: white;
     font-size: 22px;
@@ -340,12 +344,12 @@ a.brand-logo {
 }
 
 .form-container label {
-    margin-bottom: 0.6em;
+    margin-bottom: 0.5em;
 }
 
 .form-container input {
     font-size: inherit;
-    margin-bottom: 2.2em;
+    margin-bottom: 0.5em;
     padding-left: 13px;
     padding-right: 27px;
     height: 43px;
@@ -365,7 +369,12 @@ a.brand-logo {
     opacity: 0.6;
 }
 
-
+.reg-container {
+    position: relative;
+    background-color: white;
+    font-size: 22px;
+    margin: 10px;
+}
 
 /* Provide sufficient contrast against white background */
 a {

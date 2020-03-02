@@ -28,9 +28,9 @@ namespace Online_T_Shirt_Shop.Controllers
             return View();
         }
 
-        public RedirectResult SomeMethod()
+        public IActionResult Registration()
         {
-            return RedirectPermanent("/Home/RegistrationForm");
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

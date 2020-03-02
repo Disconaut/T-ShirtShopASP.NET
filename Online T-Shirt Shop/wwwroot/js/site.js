@@ -8,6 +8,7 @@ var addItemBut = document.getElementById("add-button");
 var acceptBut = document.getElementById("accept-button");
 var closeAddBut = document.getElementById("close-add");
 var shopTable = document.getElementById("new-arrivals-table-body");
+var registration = document.getElementById("regBut");
 
 function generateTableItem(name, iconPath, price) {
     let td = document.createElement("td");
@@ -63,6 +64,28 @@ function acceptAdd() {
     shopTable.lastElementChild.appendChild(generateTableItem(name, imgPath, price));
 }
 
+function validateEmail() {
+    alert("E-mail format is incorrect. Please try again.");
+    /**  let regular = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+      let inpEmail = document.getElementById("email").textContent;
+      let testRes = inpEmail.test(regular);
+  
+      if (testRes===true) {
+      }*/
+}
+
+/**function validatePhoneNumb() {
+    let regular = /^\d[\d\(\)\ -]{4,14}\d$/;
+    let inputPhone = document.getElementById("phoneNumb");
+    let testRes = inputPhone.match(regular);
+    if (testRes==false) {
+        alert("Phone number format is incorrect. Please try again.");
+
+    }
+}*/
+
 addItemBut.addEventListener("click", openAddPopup);
 closeAddBut.addEventListener("click", closeAddPopup);
 acceptBut.addEventListener("click", acceptAdd);
+/**registration.addEventListener("click",validatePhoneNumb);*/
+registration.addEventListener("click", validateEmail);
