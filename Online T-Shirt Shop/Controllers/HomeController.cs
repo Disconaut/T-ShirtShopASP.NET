@@ -28,7 +28,7 @@ namespace Online_T_Shirt_Shop.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Registration()
         {
             return View();
         }

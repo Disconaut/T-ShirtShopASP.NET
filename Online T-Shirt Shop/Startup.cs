@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Online_T_Shirt_Shop.Areas.Identity.Services.EmailSender;
+using Online_T_Shirt_Shop.Models;
 
 namespace Online_T_Shirt_Shop
 {
@@ -26,6 +30,12 @@ namespace Online_T_Shirt_Shop
         {
             services.AddControllersWithViews();
             services.AddMvc();
+
+            services.AddDbContext<ProductContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ProductContext")));
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthManagerOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
