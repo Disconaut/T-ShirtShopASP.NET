@@ -34,7 +34,7 @@
                                 <a class="nav-link text-dark">Kids</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark">About</a>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="AboutUs">About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark">Contact</a>
@@ -44,6 +44,13 @@
                     <div class="navbar-right">
                         <div class="login-link-container">
                             <a class="login-link nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><i class="fas fa-user-circle"></i>Log In</a>
+                        </div>
+                        <div class="theme-switch-wrapper">
+                            <label class="theme-switch" for="theme-changer">
+                                <input type="checkbox" id="theme-changer" />
+                                <span class="slider round"></span>
+                            </label>
+                            <em>Enable Dark Mode!</em>
                         </div>
                         <div class="cart-but"><i class="fas fa-shopping-bag"></i><span id="item-count-crt" class="cart-counter">0</span></div>
                     </div>
@@ -58,7 +65,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Online_T_Shirt_Shop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - VETOL Shop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
