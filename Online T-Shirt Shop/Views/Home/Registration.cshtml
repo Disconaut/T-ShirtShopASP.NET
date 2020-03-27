@@ -7,7 +7,7 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/site.css" />
 }
 
 <section id="new-arrivals-section" style="margin-top: 0px;">
@@ -21,7 +21,11 @@
             <label for="bdate"> B-Day: </label> <input id="bdate" type="date" />
             <label for="phoneNumb" id="phoneLable"> Phone number: </label> <input id="phoneNumb" type="tel" value="+380" />
             <label for="email" id="emailLable">Your E-mail:</label> <input id="email" type="email">
-            <label for="password">Create your password:</label> <input type="password" id="password">
+            <label for="password">Create your password:</label>
+            <div class="password-control">
+                <input type="password" id="password">
+                <button id="gen-password"><i class="fas fa-key"></i></button>
+            </div>
             <button id="regBut" class="primal-button">Registration</button>
         </div>
     </div>

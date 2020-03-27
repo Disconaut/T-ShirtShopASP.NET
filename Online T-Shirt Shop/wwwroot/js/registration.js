@@ -1,4 +1,5 @@
 ﻿var registration = document.getElementById("regBut");
+var genPassBut = document.getElementById("gen-password");
 var fnameField = document.getElementById("fname");
 var lnameField = document.getElementById("lname");
 var emailField = document.getElementById("email");
@@ -103,8 +104,71 @@ function validateForm() {
     }
 }
 
+function getRandInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generatePassword() {
+    var intCount = getRandInteger(2, 14);
+    var lowerLetterCount = getRandInteger(2, 16 - intCount);
+    var upperLetterCount = getRandInteger(2, 18 - intCount - lowerLetterCount);
+    var specCount = getRandInteger(2, 20 - intCount - lowerLetterCount - upperLetterCount);
+    const length = intCount + lowerLetterCount + upperLetterCount + specCount;
+
+    var counts = [intCount, lowerLetterCount, upperLetterCount, specCount];
+    var generators = [
+        () => getRandInteger(0, 9),
+        () => String.fromCharCode(getRandInteger('a'.charCodeAt(0), 'z'.charCodeAt(0))),
+        () => String.fromCharCode(getRandInteger('A'.charCodeAt(0), 'Z'.charCodeAt(0))),
+        () => {
+            const symbols = "%:*#@%&";
+            return symbols[getRandInteger(0, symbols.length - 1)];
+        }
+    ];
+
+    /*
+     int => 0
+     lower char => 1
+     upper char => 2
+     spec char => 3
+    */
+    var passwordTemplate = [];
+    for (var i = 0; i < length; ++i) {
+        var generated = false;
+        do {
+            var symbolType = getRandInteger(0, 3);
+            if (counts[symbolType] === 0) continue;
+            --counts[symbolType];
+            passwordTemplate.push(symbolType);
+            generated = true;
+        } while (!generated);
+    }
+
+    var password = "";
+
+    passwordTemplate.forEach((el, ind) => {
+        var generated = false;
+        do {
+            var char = generators[el]();
+            if (char.toString() === password[ind - 1]) continue;
+            password += char;
+            generated = true;
+        } while (!generated);
+    });
+
+    return password;
+}
+
 [fnameField, lnameField, bdateField, phoneField, passwordField, emailField].forEach(
     el => el.addEventListener("change", validateForm));
+
+passwordField.addEventListener("keydown", () => document.getElementById("password-generated").innerText = "");
+
+genPassBut.addEventListener("click",
+    function() {
+        passwordField.value = generatePassword();
+        document.getElementById("password-generated").innerText = `Password: ${passwordField.value}`;
+    });
 
 registration.addEventListener("click", function() {
     

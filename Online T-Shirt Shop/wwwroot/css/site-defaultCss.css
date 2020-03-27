@@ -375,6 +375,28 @@ section {
     margin-bottom: 0.5em;
 }
 
+.password-control {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+
+#gen-password {
+    height: 50px;
+    width: 50px;
+    font-size: 37px;
+    text-align: center;
+    padding: 0;
+    background-color: var(--secondary-color);
+    border: 0;
+    color: #ffffff;
+}
+
+#password-generated {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
 .form-container input {
     font-size: inherit;
     margin-bottom: 0.5em;
@@ -530,6 +552,7 @@ main > *:last-child {
 .paragraph {
     color: inherit;
 }
+
 
 
 /* Provide sufficient contrast against white background */

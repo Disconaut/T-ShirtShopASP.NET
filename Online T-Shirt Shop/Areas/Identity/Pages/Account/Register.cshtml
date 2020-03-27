@@ -76,10 +76,15 @@
     <div class="form-container">
         <label for="fname"> First Name: </label> <input id="fname" type="text" />
         <label for="lname"> Last Name: </label> <input id="lname" type="text" />
-        <label for="bdate"> B-Day: </label> <input id="bdate" type="date" min="1945-01-01" max="2008-12-31"/>
+        <label for="bdate"> B-Day: </label> <input id="bdate" type="date" min="1945-01-01" max="2008-12-31" />
         <label for="phoneNumb" id="phoneLable"> Phone number: </label> <input id="phoneNumb" type="tel" />
         <label for="email" id="emailLable">Your E-mail:</label> <input id="email" type="email">
-        <label for="password">Create your password:</label> <input type="password" id="password">
+        <label for="password">Create your password:</label> 
+        <div class="password-control">
+            <input type="password" id="password">
+            <button id="gen-password"><i class="fas fa-key"></i></button>
+            <span id="password-generated"></span>
+        </div>
         <button id="regBut" class="primal-button" disabled>Registration</button>
     </div>
 </section>
