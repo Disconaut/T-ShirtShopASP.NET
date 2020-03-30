@@ -3,7 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 @import url('https://fonts.googleapis.com/css?family=Trade+Winds&display=swap');
 
 :root {
-    --first-color: white;
+    --first-color: #ffffff;
     --secondary-color: #ff6200;
     --text-default-color: #000000;
     --border-color: #e5e5e5;
@@ -115,7 +115,7 @@ main {
     align-items: center; 
     background-color: var(--text-default-color);
     text-transform: uppercase;
-    font: normal normal normal 27px/1.4em "Trade Winds", sans-serif;
+    font: normal normal normal 27px/1.4em "Arial", sans-serif;
     color: var(--first-color);
     width: 138px;
     height: 48px;
@@ -125,6 +125,8 @@ main {
     text-decoration: none;
     color: inherit;
     transition: color 0.4s ease 0s;
+    width: 100%;
+    height: 100%;
 }
 
 .brand-logo > a:hover {
@@ -182,6 +184,7 @@ a.brand-logo {
         width: 307px;
         height: 107px;
         font-size: 1em;
+        font-weight: bold;
         color: #ffffff;
         background-color: #000000;
     }

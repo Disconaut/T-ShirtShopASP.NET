@@ -6,7 +6,7 @@
 function switchTheme(theme) {
     var variableContainer = document.querySelector(":root");
     if (theme === "white") {
-        variableContainer.style.setProperty("--first-color", "white");
+        variableContainer.style.setProperty("--first-color", "#ffffff");
         variableContainer.style.setProperty("--secondary-color", "#ff6200");
         variableContainer.style.setProperty("--text-default-color", "#000000");
         variableContainer.style.setProperty("--border-color", "#e5e5e5");
@@ -26,11 +26,18 @@ function switchTheme(theme) {
         variableContainer.style.setProperty("--chart-label-color", "rgb(189, 184, 175)");
         variableContainer.style.setProperty("--chart-axis-color", "rgb(102, 102, 102)");
     }
+    logo.setTextColor(variableContainer.style.getPropertyValue("--first-color"));
+    logo.draw(logoAnimationDuration);
 }
 
 var themeSwitcher = document.getElementById("theme-changer");
+var logoAnimationDuration = 3000; //ms
+var logo = new AnimatedLogo(document.getElementById("logo"), "VETOL", bounceOut);
 
 themeSwitcher.addEventListener("click", function() {
     if (themeSwitcher.checked) switchTheme("dark");
     else switchTheme("white");
 });
+
+logo.draw(logoAnimationDuration);
+
