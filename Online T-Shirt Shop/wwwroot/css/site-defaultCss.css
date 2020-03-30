@@ -86,9 +86,9 @@ main {
     transition: color .4s ease 0s;
 }
 
-.nav-link:hover {
+/*.nav-link:hover {
     color: var(--secondary-color);
-}
+}*/
 
 .login-link-container {
     display: flex;
@@ -266,6 +266,7 @@ section {
 }
 
 .shop-item-container {
+    background-color: #428beb;
     padding: 35px;
     width: calc((100% - 35px * 8) / 4);
 }

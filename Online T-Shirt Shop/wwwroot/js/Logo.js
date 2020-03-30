@@ -1,4 +1,4 @@
-﻿function animate({ timing, draw, duration }) {
+﻿function animate({ timing, draw, duration, callback }) {
 
     let start = window.performance.now();
 
@@ -12,6 +12,10 @@
 
         if (timeFraction < 1) {
             requestAnimationFrame(animate);
+        } else {
+            if (callback !== undefined) {
+                callback();
+            }
         }
 
     });
@@ -29,6 +33,11 @@ function bounce(timeFraction) {
             return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2);
         }
     }
+    return undefined;
+}
+
+function back(x, timeFraction) {
+    return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x);
 }
 
 var bounceOut = makeEaseOut(bounce);
@@ -39,7 +48,8 @@ function Logo(canvas, logoText) {
     const text = logoText;
 
     const spaceForLetter = width / text.length;
-    var letterTiming = bounceOut;
+    var letterInTiming = (x) => x;
+    var letterOutTiming = (x) => x;
 
     const context = canvas.getContext("2d");
     context.font = "bold 27px Arial";
@@ -51,8 +61,12 @@ function Logo(canvas, logoText) {
         context.fillStyle = color;
     }
 
-    this.setLetterTiming = function (timing) {
-        letterTiming = timing;
+    this.setLetterInTiming = function (timing) {
+        letterInTiming = timing;
+    }
+
+    this.setLetterOutTiming = function (timing) {
+        letterOutTiming = timing;
     }
 
     this.draw = function (progress = 1) {
@@ -67,24 +81,55 @@ function Logo(canvas, logoText) {
             let letterProgress = (progress - delayBetweenLetters * i) / durationForLetter;
             if (letterProgress <= 0) break;
             else if (letterProgress > 1) letterProgress = 1;
-            letterProgress = letterTiming(letterProgress);
+            letterProgress = letterInTiming(letterProgress);
             context.fillText(text[i],
                 spaceForLetter * i + spaceForLetter / 2,
                 startOfLetter + (traceLength * letterProgress));
         }
     }
+
+    this.hideLogo = function(progress = 1)
+    {
+        context.clearRect(0, 0, width, height);
+
+        const durationForLetter = 0.6;
+        const delayBetweenLetters = 0.1;
+        const endOfLetter = -50;
+        const traceLength = height / 2 - endOfLetter;
+
+        for (let i = 0; i < logoText.length; ++i) {
+            let letterProgress = (progress - delayBetweenLetters * i) / durationForLetter;
+            if (letterProgress <= 0) letterProgress = 0;
+            else if (letterProgress > 1) letterProgress = 1;
+            letterProgress = letterOutTiming(letterProgress);
+            context.fillText(text[i],
+                spaceForLetter * i + spaceForLetter / 2,
+                height / 2 - (traceLength * letterProgress));
+        }
+    }
 }
 
-function AnimatedLogo(canvas, logoText, letterTiming) {
+function AnimatedLogo(canvas, logoText, letterInTiming, letterOutTiming) {
     Logo.call(this, canvas, logoText);
-    this.setLetterTiming(letterTiming);
+    this.setLetterInTiming(letterInTiming);
+    this.setLetterOutTiming(letterOutTiming);
 
-    this.setLetterTiming = undefined;
+    this.setLetterInTiming = undefined;
+    this.setLetterOutTiming = undefined;
 
-    var animationArgs = { timing: (x) => x, draw: this.draw };
+    var drawAnimationArgs = { timing: (x) => x, draw: this.draw };
 
-    this.draw = function (duration) {
-        animationArgs.duration = duration;
-        animate(animationArgs);
+    this.draw = function (duration, callback = undefined) {
+        drawAnimationArgs.duration = duration;
+        drawAnimationArgs.callback = callback;
+        animate(drawAnimationArgs);
     };
+
+    var hideAnimationArgs = { timing: (x) => x, draw: this.hideLogo };
+
+    this.hideLogo = function(duration, callback = undefined) {
+        hideAnimationArgs.duration = duration;
+        hideAnimationArgs.callback = callback;
+        animate(hideAnimationArgs);
+    }
 }

@@ -9,6 +9,24 @@ function generateTableItem(name, iconPath, price) {
     td.classList.add("shop-item-container");
     let div = document.createElement("div");
     div.classList.add("shop-item");
+    div.addEventListener("mouseenter", (e) => {
+        var target = e.target;
+        if (!target.classList.contains("shop-item")) return;
+        var style = getComputedStyle(document.querySelector(":root"));
+        target.parentElement.style.paddingTop = "32px";
+        target.parentElement.style.paddingBottom = "32px";
+        target.style.borderColor = style.getPropertyValue("--secondary-color");
+        target.style.borderStyle = "solid";
+        target.style.borderWidth = "3px";
+    });
+    div.addEventListener("mouseleave", (e) => {
+        var target = e.target;
+        if (!target.classList.contains("shop-item")) return;
+        var style = getComputedStyle(document.querySelector(":root"));
+        target.parentElement.style.paddingTop = "35px";
+        target.parentElement.style.paddingBottom = "35px";
+        target.style.borderStyle = "none";
+    });
 
     let itemImg = document.createElement("img");
     itemImg.src = `${iconPath}`;
@@ -55,7 +73,12 @@ function acceptAdd() {
         shopTable.insertRow();
     }
 
-    shopTable.lastElementChild.appendChild(generateTableItem(name, imgPath, price));
+    var tableItem = generateTableItem(name, imgPath, price);
+    shopTable.lastElementChild.appendChild(tableItem);
+    setTimeout(function () {
+        tableItem.style.transition = "background-color 1s ease 0s";
+        tableItem.style.backgroundColor = "#ffffff";
+    },500);
 }
 
 addItemBut.addEventListener("click", openAddPopup);

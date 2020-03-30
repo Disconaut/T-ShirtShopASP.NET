@@ -162,14 +162,11 @@ function generatePassword() {
 [fnameField, lnameField, bdateField, phoneField, passwordField, emailField].forEach(
     el => el.addEventListener("change", validateForm));
 
-passwordField.addEventListener("keydown", () => document.getElementById("password-generated").innerText = "");
+passwordField.addEventListener("keydown", () => document.getElementById("password-generated").style.display = "none");
 
 genPassBut.addEventListener("click",
     function() {
         passwordField.value = generatePassword();
+        document.getElementById("password-generated").style.display = "inline";
         document.getElementById("password-generated").innerText = `Password: ${passwordField.value}`;
     });
-
-registration.addEventListener("click", function() {
-    
-});

@@ -31,13 +31,58 @@ function switchTheme(theme) {
 }
 
 var themeSwitcher = document.getElementById("theme-changer");
-var logoAnimationDuration = 3000; //ms
-var logo = new AnimatedLogo(document.getElementById("logo"), "VETOL", bounceOut);
+var logoCanvas = document.getElementById("logo");
+var navLinks = document.getElementsByClassName("nav-link");
+var logoAnimationDuration = 1500; //ms
+
+function makeUnary(func, arg1) {
+    return function(arg) {
+        return func(arg1, arg);
+    }
+}
+
+var backUnary = makeUnary(back, 1.5);
+
+var logo = new AnimatedLogo(logoCanvas, "VETOL", bounceOut, backUnary);
 
 themeSwitcher.addEventListener("click", function() {
     if (themeSwitcher.checked) switchTheme("dark");
     else switchTheme("white");
 });
 
-logo.draw(logoAnimationDuration);
+logoCanvas.addEventListener("mouseenter", () => {
+    var style = getComputedStyle(document.querySelector(":root"));
+    logo.setTextColor(style.getPropertyValue("--first-color"));
+    logo.hideLogo(1000,
+        function() {
+            logo.setTextColor(style.getPropertyValue("--secondary-color"));
+            logo.draw(logoAnimationDuration);
+        });
+});
 
+logoCanvas.addEventListener("mouseleave", () => {
+    var style = getComputedStyle(document.querySelector(":root"));
+    logo.setTextColor(style.getPropertyValue("--secondary-color"));
+    logo.hideLogo(1000,
+        function() {
+            logo.setTextColor(style.getPropertyValue("--first-color"));
+            logo.draw(logoAnimationDuration);
+        });
+});
+
+var style = getComputedStyle(document.querySelector(":root"));
+for (let i = 0; i < navLinks.length; ++i) {
+    let el = navLinks[i];
+    el.addEventListener("mouseenter", (e) => {
+        var target = e.target;
+        if (!target.classList.contains("nav-link")) return;
+        target.style.color = style.getPropertyValue("--secondary-color");
+    });
+    el.addEventListener("mouseleave", (e) => {
+        var target = e.target;
+        if (!target.classList.contains("nav-link")) return;
+        target.style.color = style.getPropertyValue("--text-color");
+    });
+};
+
+logo.draw(logoAnimationDuration);
