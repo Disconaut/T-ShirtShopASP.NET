@@ -18,7 +18,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #007bff;
+  --primary: #ff6200;
   --secondary: #6c757d;
   --success: #28a745;
   --info: #17a2b8;
@@ -2421,8 +2421,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .btn-primary:hover {
@@ -6508,7 +6508,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #007bff !important;
+  background-color: var(--primary) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -7986,6 +7986,30 @@ button.bg-dark:focus {
   margin-left: 0.5rem !important;
 }
 
+.m-2h {
+    margin: 0.75rem !important;
+}
+
+.mt-2h,
+.my-2h {
+    margin-top: 0.75rem !important;
+}
+
+.mr-2h,
+.mx-2h {
+    margin-right: 0.75rem !important;
+}
+
+.mb-2h,
+.my-2h {
+    margin-bottom: 0.75rem !important;
+}
+
+.ml-2h,
+.mx-2h {
+    margin-left: 0.75rem !important;
+}
+
 .m-3 {
   margin: 1rem !important;
 }
@@ -8176,6 +8200,30 @@ button.bg-dark:focus {
 .pl-4,
 .px-4 {
   padding-left: 1.5rem !important;
+}
+
+.p-4h {
+    padding: 2rem !important;
+}
+
+.pt-4h,
+.py-4h {
+    padding-top: 2.25rem !important;
+}
+
+.pr-4h,
+.px-4h {
+    padding-right: 2.25rem !important;
+}
+
+.pb-4h,
+.py-4h {
+    padding-bottom: 2.25rem !important;
+}
+
+.pl-4h,
+.px-4h {
+    padding-left: 2.25rem !important;
 }
 
 .p-5 {
@@ -9849,11 +9897,11 @@ button.bg-dark:focus {
 }
 
 .text-primary {
-  color: #007bff !important;
+  color: var(--primary) !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
-  color: #0056b3 !important;
+  color: var(--primary) !important;
 }
 
 .text-secondary {

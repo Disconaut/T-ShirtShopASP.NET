@@ -1,22 +1,24 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@section Styles
-{
-    <link rel="stylesheet" href="~/css/site-defaultCss.css"/>
-}
 @section Scripts{
     <script src="~/js/store.js"></script>
 }
 
-<section>
-    <div id="home-page-banner">
-        <h2 class="banner-text">Welcome, to the <span class="brand-logo">V E T O L</span> Shop!</h2>
+<section id="home-page-header">
+    <div id="home-page-banner" class="bg-primary jumbotron jumbotron-fluid py-4h mb-3">
+        <h1 class="display-3 font-weight-bold text-center text-uppercase text-white">Free shipping</h1>
+        <p class="lead font-weight-bold text-white text-center text-uppercase">ON ORDERS OVER $50 - USE COUPON CODE OVER50</p>
+        <div class="row justify-content-center mt-4">
+            <button class="btn btn-primary border-white rounded-0 mr-5 font-weight-bold">Shop Women</button>
+            <button class="btn btn-primary border-white rounded-0 mr-5 font-weight-bold">Shop Men</button>
+            <button class="btn btn-primary border-white rounded-0 font-weight-bold">Shop Kids</button>
+        </div>
     </div>
-    <div class="flex-row home-page-imgs">
-        <img class="small-img responsive-img" src="~/assets/img/woman.webp" alt="There must be woman" />
-        <img class="small-img responsive-img" src="~/assets/img/man.webp" alt="There must be man" />
-        <img class="big-img responsive-img" src="~/assets/img/man_woman.webp" alt="There must be man and woman" />
+    <div class="row mx-0">
+        <img class="col-3 h-100 responsive-cover-img pl-0 pr-3" src="~/assets/img/small_woman_poster.webp" alt="There must be woman" />
+        <img class="col-3 h-100 responsive-cover-img pl-0 pr-3" src="~/assets/img/small_man_poster.webp" alt="There must be man" />
+        <img class="col-6 h-100 responsive-cover-img px-0" src="~/assets/img/large_poster.jpg" alt="There must be man and woman" />
     </div>
 </section>
 <section id="new-arrivals-section" class="arrivals-margin">
