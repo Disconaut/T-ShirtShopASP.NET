@@ -126,29 +126,16 @@ section > h1:first-child::before {
 }
 
 #new-arrivals-section .btn-group .btn-outline-primary {
-     border-width: 3px;
-    transition-duration: 0.4s, 0.4s, 0.4s;
-    color: var(--primary);
-}
-
-#new-arrivals-section .btn-group .btn-outline-primary:hover {
-    color: var(--white);
+    border-width: 3px;
 }
 
 #new-arrivals-section .btn-group .btn-primary {
     width: 2.75rem;
     height: 2.75rem;
     font-size: 1.25rem;
-    transition: opacity 0.4s ease 0s;
 }
 
-#new-arrivals-section .btn-group .btn-primary:hover {
-    border-color: var(--primary);
-    background-color: var(--primary);
-    opacity: 0.6;
-}
-
-.footer div > .row:not(:last-child) {
+.footer div > :not(:last-child) {
     background-color: #000;
 }
 
@@ -158,6 +145,19 @@ section > h1:first-child::before {
 
 .footer .nav .nav-item .nav-link {
     height: 100%;
+}
+
+.footer .form-control {
+    border-width: 2px;
+    max-width: 244px;
+}
+
+    .footer .form-control:hover, .footer .form-control:hover {
+        border-width: 4px;
+    }
+
+.lh-5 {
+    line-height: 3rem !important;
 }
 
 @media (min-width: 768px) {
@@ -207,7 +207,6 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
-/*Registradion divide line*/
 span.text-uppercase.text-muted.lead::before {
     content: "";
     display: block;

@@ -24,7 +24,7 @@
                     <span class="icon-bar bottom-bar"></span>
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row col-sm-8 px-0 order-last order-sm-2 mt-2 mt-sm-0">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row col-sm-2 col-sm-8 px-0 order-last order-sm-2 mt-2 mt-sm-0">
                     <div class="navbar-nav pl-sm-5 flex-grow-1 order-sm-last">
                         <div class="nav-item">
                             <a class="login-link nav-link text-decoration-none d-flex flex-row justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Login">
@@ -32,7 +32,7 @@
                             </a>
                         </div>
                     </div>
-                    <ul class="navbar-nav nav-fill flex-grow-1">
+                    <ul class="navbar-nav offset-sm-2 nav-fill flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-decoration-none">Shop All</a>
                         </li>
@@ -75,8 +75,8 @@
 
     <footer class="footer">
         <div class="container-fluid px-sm-5">
-            <div class="row mx-0 pt-6 pb-5">
-                <ul class="nav offset-1 col flex-column">
+            <div class="d-flex justify-content-center mx-0 pt-6 pb-5">
+                <ul class="nav flex-column">
                     <li class="nav-item">
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Shop All</a>
                     </li>
@@ -90,7 +90,7 @@
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Stockists</a>
                     </li>
                 </ul>
-                <ul class="nav col flex-column">
+                <ul class="nav flex-column ml-5t">
                     <li class="nav-item">
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">FAQ</a>
                     </li>
@@ -104,7 +104,7 @@
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Payment Methods</a>
                     </li>
                 </ul>
-                <ul class="nav col flex-column">
+                <ul class="nav flex-column ml-5t">
                     <li class="nav-item">
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Instagram</a>
                     </li>
@@ -118,16 +118,17 @@
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Twitter</a>
                     </li>
                 </ul>
-                <div class="col-3">
-                    <h6>Join our mailing list</h6>
-                    <p>and get 10% off</p>
-                    <input type="email"/>
-                    <input type="button" class="btn"/>
+                <div class="d-flex flex-column ml-5t pt-2">
+                    <h5 class="text-white mb-0">Join our mailing list</h5>
+                    <p class="text-white lh-5 font-weight-light mb-2">and get 10% off</p>
+                    <input type="email" class="form-control text-white font-weight-bold rounded-0 py-1 pr-1 pl-4 mb-2"/>
+                    <input type="button" class="btn btn-primary rounded-0" value="Subscribe Now"/>
                 </div>
             </div>
             <div>
-                &copy; 2020 - VETOL Shop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
+                <small>&copy; 2020 by VETOL Shop. Proudly created by Disconaut and Kdanieldk 
+            </small>
+                </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
