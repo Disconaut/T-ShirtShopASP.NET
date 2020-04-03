@@ -21,21 +21,31 @@
         <img class="col-6 h-100 responsive-cover-img px-0" src="~/assets/img/large_poster.jpg" alt="There must be man and woman" />
     </div>
 </section>
-<section id="new-arrivals-section" class="arrivals-margin">
-    <div class="section-header">
-        <h2>New Arrivals</h2>
-        <div class="text-line"></div>
+<section id="new-arrivals-section" class="d-flex flex-column mt-6">
+    @*<div class="section-header">
+            <h2>New Arrivals</h2>
+            <div class="text-line"></div>
+        </div>*@
+    <h1 class="display-2 font-weight-bold text-uppercase position-relative d-flex flex-column align-items-center mb-5t">New arrivals</h1>
+    <ul id="shop" class="row row-cols-1 row-cols-sm-4 list-unstyled mb-5">
+        <li class="col p-4h">
+            <div class="card border-0 h-100">
+                <a class="flex-grow-1" href="#">
+                    <img src="~/assets/img/t-shirt_1.webp" class="card-img-top h-100 rounded-0" alt="I'm product" />
+                </a>
+                <div class="card-body flex-grow-0 px-0 pt-3 pb-0">
+                    <a class="text-dark" href="#"><h5 class="card-title font-weight-normal">I'm product</h5></a>
+                    <p class="card-text text-primary">$25.00</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="btn-group align-self-center">
+        <a class="btn btn-outline-primary rounded-0 font-weight-bold px-5">Shop All</a>
+        <a class="btn btn-primary rounded-0 text-white align-baseline"><i class="fas fa-chevron-right"></i></a>
     </div>
-    <table id="new-arrivals-table" class="shop-table">
-        <tbody id="new-arrivals-table-body">
-        <tr>
-                
-        </tr>
-        </tbody>
-    </table>
-    <button id="add-button" class="primal-button">Add new item</button>
 </section>
-<div id="add-popup" class="popup">
+@*<div id="add-popup" class="popup">
     <div class="popup-container">
         <button id="close-add" class="close-button"><i class="fas fa-times"></i></button>
         <div class="popup-header">
@@ -51,4 +61,4 @@
         <button id="accept-button" class="primal-button">OK</button>
         </div>
     </div>
-</div>
+</div>*@

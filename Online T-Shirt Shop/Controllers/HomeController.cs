@@ -18,17 +18,14 @@ namespace Online_T_Shirt_Shop.Controllers
             _logger = logger;
         }
 
+        void RenderTable() { }
+
         public IActionResult Index()
         {
             return View();
         }
 
         public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Registration()
         {
             return View();
         }

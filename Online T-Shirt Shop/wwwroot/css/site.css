@@ -102,8 +102,62 @@
     object-fit: cover;
 }
 
+section > h1:first-child::before {
+    content: "";
+    height: 0.125em;
+    position: absolute;
+    width: 7.8em;
+    background-color: var(--primary);
+    z-index: -1;
+    transform-origin: center;
+    bottom: 0.18em;
+}
+
+#new-arrivals-section {
+    margin-bottom: 21rem;
+}
+
+#shop .card .card-img-top {
+    object-fit: contain;
+}
+
+#new-arrivals-section .btn-group .btn-outline-primary {
+     border-width: 3px;
+    transition-duration: 0.4s, 0.4s, 0.4s;
+    color: var(--primary);
+}
+
+#new-arrivals-section .btn-group .btn-outline-primary:hover {
+    color: var(--white);
+}
+
+#new-arrivals-section .btn-group .btn-primary {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.25rem;
+    transition: opacity 0.4s ease 0s;
+}
+
+#new-arrivals-section .btn-group .btn-primary:hover {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    opacity: 0.6;
+}
+
+.footer div > .row:not(:last-child) {
+    background-color: #000;
+}
+
+.footer .nav .nav-item {
+    height: 2.9rem;
+}
+
+.footer .nav .nav-item .nav-link {
+    height: 100%;
+}
+
 @media (min-width: 768px) {
-    html {
+        html {
         font-size: 16px;
     }
 }
