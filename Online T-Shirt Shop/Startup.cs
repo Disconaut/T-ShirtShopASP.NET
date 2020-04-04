@@ -36,6 +36,17 @@ namespace Online_T_Shirt_Shop
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthManagerOptions>(Configuration);
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    options.CallbackPath = new PathString("/account/login/google");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +72,7 @@ namespace Online_T_Shirt_Shop
 
             app.UseAuthorization();
 
+            
             app.UseEndpoints(endpoints =>
             { 
                 endpoints.MapControllerRoute(

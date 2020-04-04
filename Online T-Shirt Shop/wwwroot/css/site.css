@@ -1,4 +1,10 @@
-﻿.navbar-brand {
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+header {
+    font-size: 16px;
+}
+
+.navbar-brand {
     /*height: 48px;*/
     height: 1.77em;
     /*width: 132px;*/
@@ -34,6 +40,17 @@
 .navbar .fas.fa-shopping-bag {
     font-size: 2.375em;
     /*font-size: 38px;*/
+}
+
+.vertical-divider {
+    width: 0;
+    margin: 0 0.5rem;
+    overflow: hidden;
+    border-left: 1px solid #e9ecef;
+}
+
+#logoutForm .fas.fa-sign-out-alt {
+    font-size: 1.7em;
 }
 
 
@@ -209,6 +226,8 @@ body {
     margin-bottom: 445px;
     /*Header*/
     margin-top: 73px;
+
+    font-family: "Roboto", Arial, sans-serif;
 }
 
 .footer {
@@ -222,7 +241,7 @@ body {
 
 @media (max-width: 576px) {
     #home-page-header .jumbotron {
-        font-size: 1.125rem;
+        font-size: 1.125em;
     }
 
     #home-page-header .jumbotron .btn {
@@ -251,5 +270,17 @@ body {
 
     body {
         margin-bottom: 1025px;
+    }
+}
+
+@media(max-width: 350px) {
+    #new-arrivals-section h1 {
+        font-size: 2.45rem !important;
+    }
+    body {
+        font-size: 12px;
+    }
+    small {
+        font-size: 58.75%;
     }
 }

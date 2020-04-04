@@ -111,10 +111,30 @@
     <section class="col-sm-4 ml-5">
         <h2 class="text-center">Registration with services</h2>
         <div class="col-sm row mt-5">
-            <div class="col-sm row"><a class="w-100 text-center">Instagram</a></div>
-            <div class="col-sm row"><a class="w-100 text-center">Facebook</a></div>
-            <div class="col-sm row"><a class="w-100 text-center">Google</a></div>
-            <div class="col-sm row"><a class="w-100 text-center">Twitter</a></div>
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
         </div>
     </section>
 </div>
