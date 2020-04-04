@@ -3051,7 +3051,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-light:hover {
-  color: #212529;
+  color: var(--primary);
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
@@ -3067,7 +3067,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-light:not(:disabled):not(.disabled):active, .btn-outline-light:not(:disabled):not(.disabled).active,
 .show > .btn-outline-light.dropdown-toggle {
-  color: #212529;
+  color: var(--primary);
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
@@ -8768,6 +8768,52 @@ button.bg-dark:focus {
   .mx-sm-5 {
     margin-left: 3rem !important;
   }
+    .m-sm-5t {
+        margin: 4rem !important;
+    }
+
+    .mt-sm-5t,
+    .my-sm-5t {
+        margin-top: 4rem !important;
+    }
+
+    .mr-sm-5t,
+    .mx-sm-5t {
+        margin-right: 4rem !important;
+    }
+
+    .mb-sm-5t,
+    .my-sm-5t {
+        margin-bottom: 4rem !important;
+    }
+
+    .ml-sm-5t,
+    .mx-sm-5t {
+        margin-left: 4rem !important;
+    }
+    .m-sm-6 {
+        margin: 6rem !important;
+    }
+
+    .mt-sm-6,
+    .my-sm-6 {
+        margin-top: 6rem !important;
+    }
+
+    .mr-sm-6,
+    .mx-sm-6 {
+        margin-right: 6rem !important;
+    }
+
+    .mb-sm-6,
+    .my-sm-6 {
+        margin-bottom: 6rem !important;
+    }
+
+    .ml-sm-6,
+    .mx-sm-6 {
+        margin-left: 6rem !important;
+    }
   .p-sm-0 {
     padding: 0 !important;
   }
@@ -8863,6 +8909,29 @@ button.bg-dark:focus {
   .px-sm-4 {
     padding-left: 1.5rem !important;
   }
+    .p-sm-4h {
+        padding: 2.25rem !important;
+    }
+
+    .pt-sm-4h,
+    .py-sm-4h {
+        padding-top: 2.25rem !important;
+    }
+
+    .pr-sm-4h,
+    .px-sm-4h {
+        padding-right: 2.25rem !important;
+    }
+
+    .pb-sm-4h,
+    .py-sm-4h {
+        padding-bottom: 2.25rem !important;
+    }
+
+    .pl-sm-4h,
+    .px-sm-4h {
+        padding-left: 2.25rem !important;
+    }
   .p-sm-5 {
     padding: 3rem !important;
   }
@@ -8882,6 +8951,30 @@ button.bg-dark:focus {
   .px-sm-5 {
     padding-left: 3rem !important;
   }
+    .p-sm-6 {
+        padding: 6rem !important;
+    }
+
+    .pt-sm-6,
+    .py-sm-6 {
+        padding-top: 6rem !important;
+    }
+
+    .pr-sm-6,
+    .px-sm-6 {
+        padding-right: 6rem !important;
+    }
+
+    .pb-sm-6,
+    .py-sm-6 {
+        padding-bottom: 6rem !important;
+    }
+
+    .pl-sm-6,
+    .px-sm-6 {
+        padding-left: 6rem !important;
+    }
+
   .m-sm-n1 {
     margin: -0.25rem !important;
   }

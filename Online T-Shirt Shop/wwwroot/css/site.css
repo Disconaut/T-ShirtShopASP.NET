@@ -79,23 +79,29 @@
 }
 /*Toggler animation end*/
 
-#home-page-banner .lead {
-    font-size: 1.9rem;
+#home-page-header .jumbotron {
+    font-size: 1.875rem;
 }
 
-#home-page-banner .btn {
+#home-page-header .jumbotron h1 {
+    font-size: 2.5em;
+}
+
+#home-page-header .jumbotron p {
+    font-size: 1em;
+}
+
+#home-page-header .jumbotron .btn {
     width: 220px;
     border-width: 3px;
-    transition: color 0.4s ease 0s, background-color 0.4s ease 0s;
-}
-
-#home-page-banner .btn:hover {
-    color: var(--primary);
-    background-color: var(--white);
 }
 
 #home-page-header > .row {
     height: 517px;
+}
+
+#home-page-header .row img {
+    height: 100%;
 }
 
 .responsive-cover-img {
@@ -106,7 +112,7 @@ section > h1:first-child::before {
     content: "";
     height: 0.125em;
     position: absolute;
-    width: 7.8em;
+    width: 7.55em;
     background-color: var(--primary);
     z-index: -1;
     transform-origin: center;
@@ -145,7 +151,6 @@ section > h1:first-child::before {
 
 .footer .form-control {
     border-width: 2px;
-    max-width: 244px;
 }
 
     .footer .form-control:hover, .footer .form-control:hover {
@@ -156,9 +161,17 @@ section > h1:first-child::before {
     line-height: 3rem !important;
 }
 
+.ls-0_08 {
+    letter-spacing: 0.08rem !important;
+}
+
 @media (min-width: 768px) {
         html {
         font-size: 16px;
+    }
+
+    .footer .form-control {
+        max-width: 244px;
     }
 }
 
@@ -189,7 +202,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    margin-bottom: 445px;
     /*Header*/
     margin-top: 73px;
 }
@@ -204,5 +217,35 @@ body {
 }
 
 @media (max-width: 576px) {
-    
+    #home-page-header .jumbotron {
+        font-size: 1.125rem;
+    }
+
+    #home-page-header .jumbotron .btn {
+            width: 100%;
+        }
+
+    #home-page-header .row {
+        height: auto;
+    }
+
+    #home-page-header .row img {
+        height: 200px;
+    }
+
+    #new-arrivals-section h1 {
+        font-size: 2.85rem !important;
+    }
+
+    #new-arrivals-section {
+        margin-bottom: 0;
+    }
+
+    small {
+        font-size: 68.75%;
+    }
+
+    body {
+        margin-bottom: 1025px;
+    }
 }
