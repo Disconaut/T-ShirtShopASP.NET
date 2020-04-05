@@ -129,6 +129,10 @@ header {
     object-fit: cover;
 }
 
+section > h1:first-child {
+    line-height: 1.09em;
+}
+
 section > h1:first-child::before {
     content: "";
     height: 0.125em;
@@ -240,6 +244,7 @@ body {
 }
 
 @media (max-width: 576px) {
+
     #home-page-header .jumbotron {
         font-size: 1.125em;
     }
