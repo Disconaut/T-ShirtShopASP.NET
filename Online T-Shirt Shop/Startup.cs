@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Areas.Identity.Services.EmailSender;
+using Online_T_Shirt_Shop.Data;
 using Online_T_Shirt_Shop.Models;
 
 namespace Online_T_Shirt_Shop
@@ -31,8 +33,11 @@ namespace Online_T_Shirt_Shop
             services.AddControllersWithViews();
             services.AddMvc();
 
-            services.AddDbContext<ProductContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProductContext")));
+            services.AddDbContext<ShopContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ShopContext")));
+
+            services.AddDefaultIdentity<Consumer>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ShopContext>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthManagerOptions>(Configuration);
@@ -77,7 +82,7 @@ namespace Online_T_Shirt_Shop
             { 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Shop}/{action=Index}/{id?}");
                 //endpoints.MapControllerRoute(
                 //    name: "area",
                 //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

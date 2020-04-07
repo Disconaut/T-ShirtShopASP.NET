@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Online_T_Shirt_Shop.Areas.Identity.Data.Enums
 {
-    public enum Genders
+    public enum UserGenders:byte
     {
         Man,
         Woman,

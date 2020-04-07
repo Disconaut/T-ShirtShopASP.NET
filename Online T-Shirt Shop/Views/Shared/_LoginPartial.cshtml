@@ -8,14 +8,14 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <li class="nav-item">
-                <a id="manage" class="nav-link d-flex h-100 flex-row justify-content-center align-items-center text-decoration-none" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                    @UserManager.GetUserName(User)
+                <a id="manage" class="nav-link d-flex h-100 flex-row justify-content-center align-items-center text-decoration-none text-truncate" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                    <i class="fas fa-user-circle mr-1"></i>@UserManager.GetUserName(User)
                 </a>
             </li>
             <li class="d-none d-sm-block vertical-divider"></li>
             <li class="nav-item">
                 <form id="logoutForm" class="form-inline justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button id="logout" type="submit" class="nav-link btn btn-link text-decoration-none"><i class="fas fa-sign-out-alt"></i><span class="d-sm-none">Logout</span></button>
+                    <button id="logout" type="submit" class="nav-link d-flex justify-content-center align-items-center btn btn-link text-decoration-none"><i class="fas fa-sign-out-alt mr-1 mr-sm-0"></i><span class="d-sm-none">Logout</span></button>
                 </form>
             </li>
         }

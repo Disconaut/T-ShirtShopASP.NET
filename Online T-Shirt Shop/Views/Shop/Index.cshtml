@@ -1,57 +1,70 @@
-﻿@model IEnumerable<Online_T_Shirt_Shop.Models.T_Shirt>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
-@section Styles
-{
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+@section Scripts{
+    <script src="~/js/homepage.js"></script>
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InStock)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InStock)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<section id="home-page-header">
+    <div id="home-page-banner" class="bg-primary jumbotron jumbotron-fluid py-4h mb-3 px-4 px-sm-0">
+        <h1 class="font-weight-bold text-center text-uppercase text-white">Free shipping</h1>
+        <p class="font-weight-bold text-white text-center text-uppercase">ON ORDERS OVER $50 - USE COUPON CODE OVER50</p>
+        <div class="row justify-content-sm-center mx-0 mt-4">
+            <div class="col col-sm-auto pr-sm-4 pr-1 pl-0">
+                <button class="btn btn-outline-light rounded-0 font-weight-bold">Shop Women</button>
+            </div>
+            <div class="col col-sm-auto pl-sm-4 pl-1 pr-sm-4 pr-0">
+                <button class="btn btn-outline-light rounded-0 font-weight-bold">Shop Men</button>
+            </div>
+            <div class="col-12 col-sm-auto pl-sm-4 pl-0 pr-0 mt-2 mt-sm-0">
+                <button class="btn btn-outline-light rounded-0 font-weight-bold">Shop Kids</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <img class="col-sm-6 col-12 responsive-cover-img px-0 order-sm-last" src="~/assets/img/large_poster.jpg" alt="There must be man and woman" />
+        <img class="col-sm-3 col-12 responsive-cover-img pl-0 pr-0 pr-sm-3 mb-3 mb-sm-0" src="~/assets/img/small_woman_poster.webp" alt="There must be woman" />
+        <img class="col-sm-3 col-12 responsive-cover-img pl-0 pr-0 pr-sm-3 mb-3 mb-sm-0" src="~/assets/img/small_man_poster.webp" alt="There must be man" />
+    </div>
+</section>
+<section id="new-arrivals-section" class="d-flex flex-column mt-sm-6 mt-3">
+    @*<div class="section-header">
+            <h2>New Arrivals</h2>
+            <div class="text-line"></div>
+        </div>*@
+    <h1 class="display-2 font-weight-bold text-uppercase position-relative d-flex flex-column align-items-center mb-sm-5t mb-4">New arrivals</h1>
+    <ul id="shop" class="row row-cols-1 row-cols-sm-4 list-unstyled mb-sm-5 mb-4 mx-0">
+        <li class="col p-sm-4h p-3">
+            <div class="card border-0 h-100">
+                <a class="flex-grow-1" href="#">
+                    <img src="~/assets/img/t-shirt_1.webp" class="card-img-top h-100 rounded-0" alt="I'm product" />
+                </a>
+                <div class="card-body flex-grow-0 px-0 pt-3 pb-0">
+                    <a class="text-dark" href="#"><h5 class="card-title font-weight-normal">I'm product</h5></a>
+                    <p class="card-text text-primary">$25.00</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="btn-group align-self-center">
+        <a class="btn btn-outline-primary rounded-0 font-weight-bold px-5">Shop All</a>
+        <a class="btn btn-primary rounded-0 text-white align-baseline"><i class="fas fa-chevron-right"></i></a>
+    </div>
+</section>
+@*<div id="add-popup" class="popup">
+        <div class="popup-container">
+            <button id="close-add" class="close-button"><i class="fas fa-times"></i></button>
+            <div class="popup-header">
+                <h3>Add new item</h3>
+            </div>
+            <div id="add-form" class="popup-body form-container">
+            <label for="product-name">Name:</label>
+            <input id="product-name" type="text"/>
+            <label for="product-img-path">Image path:</label>
+            <input id="product-img-path"/>
+            <label for="product-price">Price:</label>
+            <input id="product-price" type="number" min="0.01" step="any"/>
+            <button id="accept-button" class="primal-button">OK</button>
+            </div>
+        </div>
+    </div>*@
