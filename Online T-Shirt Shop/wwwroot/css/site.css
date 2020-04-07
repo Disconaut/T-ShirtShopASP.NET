@@ -289,3 +289,25 @@ body {
         font-size: 58.75%;
     }
 }
+
+.splitter::before {
+    content: "";
+    height: 100%;
+    width: 2px;
+    background-color: black;
+    position: absolute;
+    z-index: -1;
+}
+
+.splitter {
+    position: relative;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: rgb(204, 78, 0);
+}
+
+.custom-checkbox .custom-control-input:focus {
+
+    outline-color: rgb(204, 78, 0);
+}

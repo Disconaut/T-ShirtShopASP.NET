@@ -5,7 +5,7 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="row" id="new-arrivals-section" style="margin-top: 0px;">
+@*<div class="row" id="new-arrivals-section" style="margin-top: 0px;">
     <div class="col-md-4 popup-container">
         <section style="margin-top: 0px;">
             <form id="account" method="post">
@@ -80,7 +80,85 @@
             }
         </section>
     </div>
+</div>*@
+
+<div class="row justify-content-center">
+    
+    <section class="col-sm-4 pr-6">
+        <h1 class="text-center position-relative">Sign-in</h1>
+
+        <div class="form-group">
+            <lable for="login">Login:</lable><input id="login" class="form-control" placeholder="Login" type="text">
+        </div>
+
+    <div class="form-group">
+        <lable for="password">Password:</lable><input id="password" class="form-control" placeholder="Password" type="password">
+    </div>
+
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" id="customCheck">
+            <label class="custom-control-label " for="customCheck">Remember me?</label>
+        </div>
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary rounded-0">Log in</button>
+        </div>
+
+        <div class="form-group">
+
+            <div class="pt-2">
+                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+            </div>
+
+            <div class="pt-2">
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            </div>
+
+            <div class="pt-2">
+                <button type="submit" asp-page-handler="SendVerificationEmail" class="btn-link" style="padding: 0px; margin: 0px; border: 0px">Resend email confirmation</button>
+            </div>
+        </div>
+
+    </section>
+    
+    <span class="text-uppercase text-muted lead d-flex justify-content-center align-items-center splitter">
+        <span class="bg-white">
+            or
+        </span>
+    </span>
+    
+    <section class="col-sm-4 pl-6">
+        
+        <h1 class="text-center position-relative">Use services</h1>
+        @{
+            if ((Model.ExternalLogins?.Count ?? 0) == 0)
+            {
+                <div>
+                    <p>
+                        There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                        for details on setting up this ASP.NET application to support logging in via external services.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div>
+                        <p>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-light rounded-pill" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            }
+                        </p>
+                    </div>
+                </form>
+            }
+        }
+    </section>
+
 </div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
