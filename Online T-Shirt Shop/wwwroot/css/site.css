@@ -129,15 +129,19 @@ header {
     object-fit: cover;
 }
 
-section > h1:first-child {
+section > h1.section-header:first-child {
     line-height: 1.09em;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-section > h1:first-child::before {
-    content: "";
+section > h1.section-header:first-child > span.header-underline {
     height: 0.125em;
     position: absolute;
-    width: 7.55em;
     background-color: var(--primary);
     z-index: -1;
     transform-origin: center;
