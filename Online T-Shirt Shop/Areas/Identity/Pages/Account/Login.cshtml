@@ -71,7 +71,7 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    <button type="submit" class="btn btn-light rounded-0 box-shadow" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">provider.DisplayName</button>
                                 }
                             </p>
                         </div>
@@ -85,11 +85,7 @@
 <div class="row justify-content-center">
     
     <section class="col-sm-4 pr-6">
-        
-        <div class="position-relative d-flex justify-content-center">
-            <h1 class="text-center position-relative">Sign-in</h1>
-            <div class="header-line mb-3 pt-1"></div>
-        </div>
+        <h1 class="display-3 section-header">Sign-in <span class="header-underline"></span></h1>
 
         <div class="form-group">
             <lable for="login">Login:</lable><input id="login" class="form-control" placeholder="Login" type="text">
@@ -133,11 +129,8 @@
     </span>
     
     <section class="col-sm-4 pl-6">
-            
-        <div class="position-relative d-flex justify-content-center">
-            <h1 class="text-center position-relative">Use services</h1>
-            <div class="header-line mb-3 pt-1"></div>
-        </div>
+        
+        <h1 class="display-3 section-header">Use services<span class="header-underline"></span></h1>
         @{
             if ((Model.ExternalLogins?.Count ?? 0) == 0)
             {

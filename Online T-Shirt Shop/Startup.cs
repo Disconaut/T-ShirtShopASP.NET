@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +37,15 @@ namespace Online_T_Shirt_Shop
             services.AddDbContext<ShopContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ShopContext")));
 
-            services.AddDefaultIdentity<Consumer>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<Consumer>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 8;
+                }).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ShopContext>();
 
             services.AddTransient<IEmailSender, EmailSender>();
@@ -83,9 +92,9 @@ namespace Online_T_Shirt_Shop
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Shop}/{action=Index}/{id?}");
-                //endpoints.MapControllerRoute(
-                //    name: "area",
-                //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "area",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });

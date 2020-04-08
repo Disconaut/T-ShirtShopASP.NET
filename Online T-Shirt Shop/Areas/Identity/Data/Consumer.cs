@@ -13,9 +13,9 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Data
     // Add profile data for application users by adding properties to the Consumer class
     public class Consumer : IdentityUser
     {
-        [Required, MaxLength(256)]
+        [MaxLength(256)]
         public string FirstName { get; set; }
-        [Required, MaxLength(256)]
+        [MaxLength(256)]
         public string LastName { get; set; }
 
         [Column(TypeName = "varchar(5)")]
