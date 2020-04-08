@@ -105,7 +105,3 @@ function validateForm() {
 
 [fnameField, lnameField, bdateField, phoneField, passwordField, emailField].forEach(
     el => el.addEventListener("change", validateForm));
-
-registration.addEventListener("click", function() {
-    
-});

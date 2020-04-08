@@ -85,7 +85,11 @@
 <div class="row justify-content-center">
     
     <section class="col-sm-4 pr-6">
-        <h1 class="text-center position-relative">Sign-in</h1>
+        
+        <div class="position-relative d-flex justify-content-center">
+            <h1 class="text-center position-relative">Sign-in</h1>
+            <div class="header-line mb-3 pt-1"></div>
+        </div>
 
         <div class="form-group">
             <lable for="login">Login:</lable><input id="login" class="form-control" placeholder="Login" type="text">
@@ -129,8 +133,11 @@
     </span>
     
     <section class="col-sm-4 pl-6">
-        
-        <h1 class="text-center position-relative">Use services</h1>
+            
+        <div class="position-relative d-flex justify-content-center">
+            <h1 class="text-center position-relative">Use services</h1>
+            <div class="header-line mb-3 pt-1"></div>
+        </div>
         @{
             if ((Model.ExternalLogins?.Count ?? 0) == 0)
             {
@@ -162,4 +169,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/login.js"></script>
 }

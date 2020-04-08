@@ -133,7 +133,7 @@ section > h1:first-child {
     line-height: 1.09em;
 }
 
-section > h1:first-child::before {
+.header-line {
     content: "";
     height: 0.125em;
     position: absolute;
