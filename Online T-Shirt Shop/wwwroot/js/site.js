@@ -1,4 +1,7 @@
-﻿$.fn.textWidth = function () {
+﻿var underline = document.getElementsByClassName("section > h1.section-header:first-child > span.header-underline");
+
+
+$.fn.textWidth = function () {
     var self = $(this),
         children = self.contents().filter(function () { return this.nodeType === 3; }),
         calculator = $('<span></span>'),
@@ -10,13 +13,13 @@
     return width;
 };
 
-function SetLine() {
+function LineAnimation() {
+    var underline = $("section > h1.section-header:first-child > span.header-underline");
+    underline.width(0);
+    underline.animate({width:"110%"},800);
+};
 
-    $("section > h1.section-header:first-child > span.header-underline").each(function (index) {
-        var textWidth = $(this).parent().textWidth();
-        $(this).width(textWidth);
-    });
 
-}
-
-$(document).ready(SetLine);
+$(window).on("load", () => {
+    $("main").hide().fadeIn(500,LineAnimation);
+});

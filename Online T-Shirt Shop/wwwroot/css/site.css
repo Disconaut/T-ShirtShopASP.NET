@@ -167,6 +167,8 @@ section > h1.section-header:first-child {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 section > h1.section-header:first-child > span.header-underline {
@@ -176,6 +178,7 @@ section > h1.section-header:first-child > span.header-underline {
     z-index: -1;
     transform-origin: center;
     bottom: 0.18em;
+    width: 110%;
 }
 
 #new-arrivals-section {
