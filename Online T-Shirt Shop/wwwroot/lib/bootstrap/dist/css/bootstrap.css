@@ -9207,6 +9207,29 @@ button.bg-dark:focus {
   .mx-md-5 {
     margin-left: 3rem !important;
   }
+    .m-md-5t {
+        margin: 4rem !important;
+    }
+
+    .mt-md-5t,
+    .my-md-5t {
+        margin-top: 4rem !important;
+    }
+
+    .mr-md-5t,
+    .mx-md-5t {
+        margin-right: 4rem !important;
+    }
+
+    .mb-md-5t,
+    .my-md-5t {
+        margin-bottom: 4rem !important;
+    }
+
+    .ml-md-5t,
+    .mx-md-5t {
+        margin-left: 4rem !important;
+    }
   .p-md-0 {
     padding: 0 !important;
   }
