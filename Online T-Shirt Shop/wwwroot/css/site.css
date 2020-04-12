@@ -156,11 +156,13 @@ header {
 
 #home-page-header .row img {
     height: 100%;
+    opacity: 1;
+    transition: opacity 0.25s ease-in, padding-bottom 0.4s ease-in;
 }
 
 #home-page-header .row img.hidden {
     opacity: 0;
-    
+    padding-bottom: 25%;
 }
 
 .responsive-cover-img {
