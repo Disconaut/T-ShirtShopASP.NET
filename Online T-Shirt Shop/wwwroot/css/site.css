@@ -186,7 +186,7 @@ section > h1.section-header:first-child > span.header-underline {
     z-index: -1;
     transform-origin: center;
     bottom: 0.18em;
-    width: 110%;
+    width: 0;
 }
 
 #new-arrivals-section {
