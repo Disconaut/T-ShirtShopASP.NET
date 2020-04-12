@@ -63,46 +63,52 @@
     </div>*@
 
 
-<div class="d-flex justify-content-center">
 
-    <section class="col-sm-5 justify-content-center">
-
-        <h1 class="text-center position-relative">Registration</h1>
-        <div class="col">
-            <div class="row justify-content-around">
-                <div class="col-sm-6 form-group">
-                    <label for="fname">First Name:</label> <input id="fname" class="form-control" placeholder="First Name" type="text"/>
+    <section class=" align-items-center justify-content-center d-flex flex-column">
+        <h1 class="display-3 section-header">Registration<span class="header-underline"></span></h1>
+        <form class="w-50">
+            <div class="col">
+                <div class="row justify-content-around">
+                    <div class="col-sm-6 form-group">
+                        <label for="fname">First Name:</label> <input id="fname" class="form-control" placeholder="First Name" type="text" />
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="lname">Last Name:</label> <input id="lname" class="form-control" placeholder="Last Name" type="text" />
+                    </div>
                 </div>
-                <div class="col-sm-6 form-group">
-                    <label for="lname">Last Name:</label> <input id="lname" class="form-control" placeholder="Last Name" type="text"/>
+
+                <div class="form-group">
+                    <label for="phoneNumb" id="phoneLable"> Phone number: </label> <input id="phoneNumb" class="form-control" placeholder="Phone Numb" type="tel" />
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="bdate"> B-Day: </label> <input id="bdate" class="form-control" placeholder="B-day" type="date" min="1945-01-01" max="2008-12-31" />
-            </div>
 
-            <div class="form-group">
-                <label for="phoneNumb" id="phoneLable"> Phone number: </label> <input id="phoneNumb" class="form-control" placeholder="Phone Numb" type="tel" />
-            </div>
-
-            <div class="form-group">
-                <label for="email" id="emailLable">Your E-mail:</label> <input id="email" class="form-control" placeholder="E-mail" type="email">
-            </div>
-
-            <div class="form-group">
-                <label for="password" style="font-family:'Avenir'">Create your password:</label> <input id="password" class="form-control" placeholder="Password">
-            </div>
-
-            <div class="form-group">
-                <label for="confirm-password">Confirm password:</label> <input id="confirm-password" class="form-control" placeholder="Password">
-
-                <div class="d-flex">
-                    <button class="btn btn-primary rounded-0">Registration</button>
+                <div class="form-group">
+                    <label for="email" id="emailLable">Your E-mail:</label> <input id="email" class="form-control" placeholder="E-mail" type="email">
                 </div>
+
+                <div class="form-group">
+                    <label for="password" style="font-family:'Avenir'">Create your password:</label> <input id="password" class="form-control" placeholder="Password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm password:</label> <input id="confirm-password" class="form-control" placeholder="Password"/>
+                </div>
+                
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input">
+                    <label class="custom-control-label" >Agree with privacy policy.</label>
+                </div>
+
+                <div class="form-group">
+
+                    <div class="btn btn-primary rounded-0 w-100 mt-3">
+                        <button class="btn btn-primary rounded-0">Registration</button>
+                    </div>
+                </div>
+
             </div>
-        </div>
+            
+        </form>
     </section>
-</div>
 
 
 @section Scripts {
