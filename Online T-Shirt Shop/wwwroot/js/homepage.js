@@ -1,1 +1,1 @@
-﻿//$("#new-arrivals-section > .jumbotron:first-child").fadeIn({ duration: 2000, queue: false }).slideUp({duration: 2000, queue: false});
+﻿

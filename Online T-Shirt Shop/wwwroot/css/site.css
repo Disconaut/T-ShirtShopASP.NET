@@ -158,6 +158,11 @@ header {
     height: 100%;
 }
 
+#home-page-header .row img.hidden {
+    opacity: 0;
+    
+}
+
 .responsive-cover-img {
     object-fit: cover;
 }
