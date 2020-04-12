@@ -150,17 +150,28 @@ function makeWithoutParameter(func, ...args) {
     }
 }
 
-var preloaderLogo = new AnimatedLogo($(".preloader-overlay > canvas.logo-loader")[0], "VETOL", bounceOut, makeUnary(back, 2.5));
-preloaderLogo.setTextColor("#ffffff");
-preloaderLogo.setFont("bold 52px Roboto");
+function preloaderMain() {
+    if (sessionStorage.getItem("loaded") !== null || sessionStorage.getItem("loaded") === "true") return;
+    $(".preloader-overlay").css("display", "flex");
+    var preloaderLogo = new AnimatedLogo($(".preloader-overlay > canvas.logo-loader")[0],
+        "VETOL",
+        bounceOut,
+        makeUnary(back, 2.5));
+    preloaderLogo.setTextColor("#ffffff");
+    preloaderLogo.setFont("bold 52px Roboto");
 
-var loaderInterval = setInterval(function() {
-        preloaderLogo.draw(2500, makeWithoutParameter(preloaderLogo.hideLogo, 1000));
-    },
-    3500);
+    var loaderInterval = setInterval(function() {
+            preloaderLogo.draw(2500, makeWithoutParameter(preloaderLogo.hideLogo, 1000));
+        },
+        3500);
 
-$(window).on("load", function () {
-    $(".preloader-overlay > canvas.logo-loader").fadeOut().stop().delay(400).fadeOut('slow');
-    $(".preloader-overlay").fadeOut().stop().delay(400).fadeOut('slow');
-    clearInterval(loaderInterval);
-})
+    $(window).on("load",
+        function() {
+            $(".preloader-overlay > canvas.logo-loader").fadeOut().stop().delay(400).fadeOut('slow');
+            $(".preloader-overlay").fadeOut().stop().delay(400).fadeOut('slow');
+            clearInterval(loaderInterval);
+            sessionStorage.setItem("loaded", "true");
+        });
+}
+
+preloaderMain();

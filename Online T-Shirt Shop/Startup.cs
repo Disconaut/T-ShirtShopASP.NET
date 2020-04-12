@@ -50,6 +50,7 @@ namespace Online_T_Shirt_Shop
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthManagerOptions>(Configuration);
+            services.AddSingleton<MessageTemplateService>();
 
             services.AddAuthentication()
                 .AddGoogle(options =>
