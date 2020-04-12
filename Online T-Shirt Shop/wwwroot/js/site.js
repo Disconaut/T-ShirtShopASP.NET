@@ -1,30 +1,11 @@
-﻿var underline = document.getElementsByClassName("section > h1.section-header:first-child > span.header-underline");
-
-
-$.fn.textWidth = function () {
-    var self = $(this),
-        children = self.contents().filter(function () { return this.nodeType === 3; }),
-        calculator = $('<span></span>'),
-        width;
-
-    children.wrap(calculator);
-    width = children.parent().width();
-    children.unwrap();
-    return width;
-};
-
-function LineAnimation() {
+﻿function LineAnimation() {
     var underline = $("section > h1.section-header:first-child > span.header-underline");
-    underline.width(0);
-    underline.animate({width:"110%"},800);
+    underline.animate({width:"110%"},700);
 };
 
 
-//themeSwitcher.addEventListener("click", function() {
-//    if (themeSwitcher.checked) switchTheme("dark");
-//    else switchTheme("white");
-//});
 function main() {
+    $("main").hide().fadeIn(400, LineAnimation);
     var lastScroll = $(window).scrollTop();
 
     $(window).scroll(() => {
@@ -42,4 +23,4 @@ function main() {
     });
 }
 
-$(window).ready(() => main())
+$(window).ready(() => main());
