@@ -7,138 +7,142 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <header class="fixed-top">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white mb-3">
-            <div class="container-fluid px-sm-5">
-                
-                <div class="col-auto col-sm-1 px-0">
-                    <div class="navbar-brand position-relative">
-                        <a class="text-center text-uppercase font-weight-bold text-decoration-none stretched-link" asp-area="" asp-controller="Shop" asp-action="Index">VETOL</a>
-                    </div>
+<div class="preloader-overlay justify-content-center align-items-center">
+    <canvas class="logo-loader" width="250" height="91"></canvas>
+    <script src="~/js/Preloader.js"></script>
+</div>
+<header class="fixed-top">
+    <nav class="navbar navbar-expand-xl navbar-toggleable-sm navbar-light bg-white mb-3">
+        <div class="container-fluid px-xl-5 px-md-3">
+
+            <div class="col-auto col-xl-1 px-0">
+                <div class="navbar-brand position-relative">
+                    <a class="text-center text-uppercase font-weight-bold text-decoration-none stretched-link" asp-area="" asp-controller="Shop" asp-action="Index">VETOL</a>
                 </div>
+            </div>
 
-                <button class="navbar-toggler collapsed order-first" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar top-bar"></span>
-                    <span class="icon-bar middle-bar"></span>
-                    <span class="icon-bar bottom-bar"></span>
-                </button>
+            <button class="navbar-toggler collapsed order-first" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar top-bar"></span>
+                <span class="icon-bar middle-bar"></span>
+                <span class="icon-bar bottom-bar"></span>
+            </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse col-sm-10 order-last order-sm-2 mt-2 mt-sm-0">
-                    @*<ul class="navbar-nav pl-sm-5 flex-grow-1">
+            <div class="navbar-collapse collapse d-xl-inline-flex flex-md-row-reverse col-xl-10 order-last order-xl-2 mt-2 mt-xl-0">
+                @*<ul class="navbar-nav pl-sm-5 flex-grow-1">
                         <li class="nav-item">
                             <a class="login-link nav-link text-decoration-none d-flex flex-row justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Login">
                                 <i class="fas fa-user-circle mr-1"></i>Log In
                             </a>
                         </li>
                     </ul>*@
-                    <partial name="_LoginPartial"/>
-                    <ul class="navbar-nav flex-sm-grow-1 offset-sm-3 nav-fill">
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Shop All</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Women</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Men</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Kids</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none" asp-controller="Shop" asp-action="AboutUs">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Contact</a>
-                        </li>
-                    </ul>
-                    @*<div class="theme-switch-wrapper">
+                <partial name="_LoginPartial"/>
+                <ul class="navbar-nav flex-xl-grow-1 offset-xl-3 nav-fill align-items-xl-stretch align-items-sm-start">
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none">Shop All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none">Women</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none">Men</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none">Kids</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none" asp-controller="Shop" asp-action="AboutUs">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-decoration-none">Contact</a>
+                    </li>
+                </ul>
+                @*<div class="theme-switch-wrapper">
                             <label class="theme-switch" for="theme-changer">
                                 <input type="checkbox" id="theme-changer"/>
                                 <span class="slider round"></span>
                             </label>
                             <em>Enable Dark Mode!</em>
                         </div>*@
-                </div>
-                <div class="order-3 col-auto col-sm-1 px-0">
-                    <button class=" ml-sm-auto bg-transparent border-0 d-flex flex-row justify-content-center">
-                        <i class="fas fa-shopping-bag"></i>
-                        <span id="item-count-crt" class="text-white position-absolute mt-2h">0</span>
-                    </button>
-                </div>
             </div>
-        </nav>
-    </header>
-    <div class="container-fluid px-sm-5 px-0">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="footer">
-        <div class="container-fluid px-sm-5 px-0">
-            <div class="d-flex justify-content-center align-items-sm-baseline align-items-center flex-column flex-sm-row mx-0 pt-5 pt-sm-6">
-                <ul class="nav flex-column align-items-center align-items-sm-start mb-5">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Shop All</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Stockists</a>
-                    </li>
-                </ul>
-                <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-5t mb-5">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Shipping & Returns</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Store Policy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Payment Methods</a>
-                    </li>
-                </ul>
-                <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-5t mb-5">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Instagram</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Telegram</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Facebook</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Twitter</a>
-                    </li>
-                </ul>
-                <div class="d-flex flex-column ml-sm-5t mr-sm-0 mx-3 mb-5">
-                    <h5 class="text-white ls-0_08 text-center text-sm-left mb-0">Join our mailing list</h5>
-                    <p class="text-white ls-0_08 text-center text-sm-left lh-5 font-weight-light mb-2">and get 10% off</p>
-                    <input type="email" class="form-control text-white font-weight-bold rounded-0 py-1 pr-1 pl-4 mb-2"/>
-                    <input type="button" class="btn btn-primary rounded-0" value="Subscribe Now"/>
-                </div>
+            <div class="order-3 col-auto col-xl-1 px-0">
+                <button class="ml-xl-auto bg-transparent border-0 d-flex flex-row justify-content-center">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span id="item-count-crt" class="text-white position-absolute mt-2h">0</span>
+                </button>
             </div>
-            <div>
-                <small>&copy; 2020 by VETOL Shop. Proudly created by Disconaut and Kdanieldk 
-            </small>
-                </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    </nav>
+</header>
+<div class="container-fluid px-xl-5 px-0">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="container-fluid px-xl-5 px-0">
+        <div class="d-flex justify-content-center align-items-md-baseline align-items-center flex-column flex-sm-row mx-0 pt-5 flex-wrap pt-sm-6">
+            <ul class="nav flex-column align-items-center align-items-sm-start mb-5">
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Shop All</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Stockists</a>
+                </li>
+            </ul>
+            <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-5t mb-5">
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Shipping & Returns</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Store Policy</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Payment Methods</a>
+                </li>
+            </ul>
+            <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-5t mb-5">
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Instagram</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Telegram</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Facebook</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link d-flex align-items-center text-white py-0">Twitter</a>
+                </li>
+            </ul>
+            <div class="subscription-form d-flex flex-column col-md-auto col-sm-6 col-10 ml-md-5t mx-0 mb-5 px-0">
+                <h5 class="text-white ls-0_08 text-center text-md-left mb-0">Join our mailing list</h5>
+                <p class="text-white ls-0_08 text-center text-md-left lh-5 font-weight-light mb-2">and get 10% off</p>
+                <input type="email" class="form-control text-white font-weight-bold rounded-0 py-1 pr-1 pl-4 mb-2"/>
+                <input type="button" class="btn btn-primary rounded-0" value="Subscribe Now"/>
+            </div>
+        </div>
+        <div>
+            <small>&copy; 2020 by VETOL Shop. Proudly created by Disconaut and Kdanieldk
+            </small>
+        </div>
+    </div>
+</footer>
 <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+@RenderSection("Scripts", required: false)
 </body>
 </html>

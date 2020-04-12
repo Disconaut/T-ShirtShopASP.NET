@@ -1,5 +1,31 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+/*Scrollbar*/
+::-webkit-scrollbar {
+    position: absolute;
+    width: 6px;
+    transition: width 0.25s ease;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ff6200;
+}
+
+.preloader-overlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary);
+    z-index: 1031;
+}
+
+.logo-loader {
+    background-color: #000000;
+}
+
 header {
     font-size: 16px;
 }
@@ -40,6 +66,10 @@ header {
 .navbar .fas.fa-shopping-bag {
     font-size: 2.375em;
     /*font-size: 38px;*/
+}
+
+#manage {
+    max-width: 300px;
 }
 
 .vertical-divider {
@@ -199,17 +229,17 @@ section > h1.section-header:first-child > span.header-underline {
         font-size: 16px;
     }
 
-    .footer .form-control {
-        max-width: 244px;
+    .footer .subscription-form > *{
+        max-width: 240px;
     }
 }
 
 .border-top {
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #f1f1f1;
 }
 
 .border-bottom {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #f1f1f1;
 }
 
 .box-shadow {
@@ -247,18 +277,48 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
+@media (max-width: 1199px) {
+    #new-arrivals-section {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 989px) {
+    #home-page-header .row {
+        height: auto;
+    }
+
+    #home-page-header .row img {
+        height: 300px;
+    }
+}
+
+@media( min-width: 576px) and (max-width: 1200px) {
+    .user-panel {
+        position: absolute;
+    }
+}
+
+@media(max-width:774px) {
+    body {
+        margin-bottom: 602px;
+    }
+}
+
+@media(max-width: 767px) {
+    #home-page-header .jumbotron .btn {
+        width: 100%;
+    }
+
+    #new-arrivals-section h1 {
+        font-size: 4.75rem !important;
+    }
+}
+
 @media (max-width: 576px) {
 
     #home-page-header .jumbotron {
         font-size: 1.125em;
-    }
-
-    #home-page-header .jumbotron .btn {
-            width: 100%;
-        }
-
-    #home-page-header .row {
-        height: auto;
     }
 
     #home-page-header .row img {
@@ -267,10 +327,6 @@ body {
 
     #new-arrivals-section h1 {
         font-size: 2.85rem !important;
-    }
-
-    #new-arrivals-section {
-        margin-bottom: 0;
     }
 
     small {
