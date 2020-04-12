@@ -1,4 +1,4 @@
-﻿function LineAnimation() {
+﻿function HeaderAnimation() {
     var underline = $("section > h1.section-header:first-child > span.header-underline");
     underline.animate({width:"110%"},700);
 };
