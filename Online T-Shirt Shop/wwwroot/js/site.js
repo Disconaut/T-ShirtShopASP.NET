@@ -20,6 +20,26 @@ function LineAnimation() {
 };
 
 
-$(window).on("load", () => {
-    $("main").hide().fadeIn(500,LineAnimation);
-});
+//themeSwitcher.addEventListener("click", function() {
+//    if (themeSwitcher.checked) switchTheme("dark");
+//    else switchTheme("white");
+//});
+function main() {
+    var lastScroll = $(window).scrollTop();
+
+    $(window).scroll(() => {
+        var currentScroll = $(window).scrollTop();
+        if (currentScroll <= 0) {
+            $("body").removeClass("downscroll");
+            return;
+        }
+        if (currentScroll < lastScroll) {
+            $("body").removeClass("downscroll");
+        } else {
+            $("body").addClass("downscroll");
+        }
+        lastScroll = currentScroll;
+    });
+}
+
+$(window).ready(() => main())
