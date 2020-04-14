@@ -179,6 +179,7 @@ section > h1.section-header:first-child {
     align-items: center;
     width: fit-content;
     margin: 0 auto;
+    opacity: 0;
 }
 
 section > h1.section-header:first-child > span.header-underline {
@@ -186,14 +187,18 @@ section > h1.section-header:first-child > span.header-underline {
     position: absolute;
     background-color: var(--primary);
     z-index: -1;
-    transform-origin: center;
+    transform-origin: left;
     bottom: 0.18em;
-    width: 0;
+    width: 110%;
 }
 
-#new-arrivals-section {
-    margin-bottom: 21rem;
+section > h1.section-header:first-child > span.header-text > span.letter {
+    display: inline-block;
 }
+
+    #new-arrivals-section {
+        margin-bottom: 21rem;
+    }
 
 #shop .card .card-img-top {
     object-fit: contain;

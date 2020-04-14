@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Areas.Identity.Services.EmailSender;
-using RazorEngine.Templating;
 
 namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
 {
