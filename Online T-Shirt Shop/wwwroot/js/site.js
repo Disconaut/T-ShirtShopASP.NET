@@ -1,7 +1,4 @@
-﻿
-
-
-function HeaderAnimation(target) {
+﻿function HeaderAnimation(target) {
     var text = $(target).children(".header-text");
     var underline = $(target).children("span.header-underline");
     text.html(function (index, html) {
