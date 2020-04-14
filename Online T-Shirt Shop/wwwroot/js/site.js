@@ -2,17 +2,38 @@
 
 
 function HeaderAnimation(target) {
-    var text = $(target).children(".letters");
-    text.html(function (index, html) {
-        return html.replace(/\S/g, '<span class="letter">$&</span>');
-    });    
-
-    var tl = gsap.timeline();
-    gsap.set("section>h1.section-header:first-child>.letters>.letter", { opacity: 0, scale: 0.2});
-    tl.to("section>h1.section-header:first-child>.letters>.letter", { opacity: 1, duration: 1, scale: 1, ease: "expo", delay: (i) => 70 * (i + 1)});
-    tl.to("section>h1.section-header", { delay:1, duration:1, ease: "expo"});
+    var text = $(target).children(".header-text");
     var underline = $(target).children("span.header-underline");
-    underline.animate({ width: "110%" }, 700);
+    text.html(function (index, html) {
+        return html.replace(/\S/g, "<span class='letter'>$&</span>");
+    });
+
+    gsap.timeline().set(target, {opacity: 1})
+        .fromTo(text.children(".letter"),
+            {
+                scale: 0.3,
+                opacity: 0
+            },
+            {
+                scale: 1,
+                opacity: 1,
+                translateZ: 0,
+                ease: "expo",
+                duration: 0.6,
+                delay: (i) => {
+                    return 0.07 * (i + 1);
+                }
+            }).fromTo(underline,
+            {
+                scaleX: 0,
+                opacity: 0.5
+            },
+            {
+                scaleX: 1,
+                opacity: 1,
+                ease: "expo",
+                duration: 0.7
+            });
 };
 
 
@@ -23,7 +44,8 @@ function createHeaderScenes(scrollController) {
             triggerElement: currentHeader,
             duration: 0,
             offset: "100%",
-            triggerHook: "onEnter"
+            triggerHook: "onEnter",
+            reverse: false
         }).on("enter",
             (event) => {
                 HeaderAnimation(currentHeader);

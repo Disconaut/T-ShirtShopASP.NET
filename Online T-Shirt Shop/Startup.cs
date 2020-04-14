@@ -89,13 +89,13 @@ namespace Online_T_Shirt_Shop
 
             
             app.UseEndpoints(endpoints =>
-            { 
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Shop}/{action=Index}/{id?}");
+            {
                 endpoints.MapControllerRoute(
                     name: "area",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Shop}/{action=Index}/{id?}");
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
