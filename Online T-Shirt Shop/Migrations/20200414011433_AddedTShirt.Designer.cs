@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Online_T_Shirt_Shop.Data;
 
 namespace Online_T_Shirt_Shop.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20200414011433_AddedTShirt")]
+    partial class AddedTShirt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,22 +231,6 @@ namespace Online_T_Shirt_Shop.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "968f7b77-8675-4f4d-b225-91e202941f96",
-                            Email = "relaxer@rlx.net",
-                            EmailConfirmed = true,
-                            Gender = "Man",
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "96639828-c965-4dec-b3cf-ebe82709c6ce",
-                            TwoFactorEnabled = false,
-                            UserName = "Relaxer"
-                        });
                 });
 
             modelBuilder.Entity("Online_T_Shirt_Shop.Models.CartItem", b =>
@@ -287,15 +273,6 @@ namespace Online_T_Shirt_Shop.Migrations
                     b.HasIndex("ConsumerId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ConsumerId = "1",
-                            Date = new DateTime(2020, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Submission = 29.99m
-                        });
                 });
 
             modelBuilder.Entity("Online_T_Shirt_Shop.Models.OrderProduct", b =>
