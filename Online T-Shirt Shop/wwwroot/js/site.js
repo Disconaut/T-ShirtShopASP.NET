@@ -1,8 +1,20 @@
-﻿function HeaderAnimation(target) {
-    var text = $(target).children("span:not(.header-underline)");
+﻿
+
+
+function HeaderAnimation(target) {
+    var text = $(target).children(".letters");
+    text.html(function (index, html) {
+        return html.replace(/\S/g, '<span class="letter">$&</span>');
+    });    
+
+    var tl = gsap.timeline();
+    gsap.set("section>h1.section-header:first-child>.letters>.letter", { opacity: 0, scale: 0.2});
+    tl.to("section>h1.section-header:first-child>.letters>.letter", { opacity: 1, duration: 1, scale: 1, ease: "expo", delay: (i) => 70 * (i + 1)});
+    tl.to("section>h1.section-header", { delay:1, duration:1, ease: "expo"});
     var underline = $(target).children("span.header-underline");
-    underline.animate({width:"110%"},700);
+    underline.animate({ width: "110%" }, 700);
 };
+
 
 function createHeaderScenes(scrollController) {
     $("section > h1.section-header:first-child").each(function() {
