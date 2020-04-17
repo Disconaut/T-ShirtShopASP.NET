@@ -30,6 +30,7 @@ namespace Online_T_Shirt_Shop.Models
 
         [EnumDataType(typeof(TShirtAge)), Required]
         public TShirtAge Age { get; set; }
+
         public string KeywordsJson { get; set; }
 
         [NotMapped]

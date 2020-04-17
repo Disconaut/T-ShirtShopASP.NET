@@ -5,7 +5,7 @@
         return html.replace(/\S/g, "<span class='letter'>$&</span>");
     });
 
-    gsap.timeline().set(target, {opacity: 1})
+    window.gsap.timeline().set(target, {opacity: 1})
         .fromTo(text.children(".letter"),
             {
                 scale: 0.3,
