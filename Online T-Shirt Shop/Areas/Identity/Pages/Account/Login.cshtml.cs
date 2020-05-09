@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Online_T_Shirt_Shop.Areas.Identity.Data;
+using Online_T_Shirt_Shop.Areas.Identity.Services.EmailSender;
 
 namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
 {
@@ -22,16 +23,19 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
         private readonly SignInManager<Consumer> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly MessageTemplateService _messageService;
 
         public LoginModel(SignInManager<Consumer> signInManager, 
             ILogger<LoginModel> logger,
             UserManager<Consumer> userManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            MessageTemplateService messageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _messageService = messageService;
         }
 
         [BindProperty]
@@ -65,7 +69,7 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -77,13 +81,21 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
 
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe,
+                    lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -119,7 +131,10 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                ModelState.AddModelError(string.Empty, "There is no user with email " + Input.Email);
+            }else if (user.EmailConfirmed)
+            {
+                ModelState.AddModelError(string.Empty, "Your email is verified");
             }
 
             var userId = await _userManager.GetUserIdAsync(user);
@@ -132,7 +147,7 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
             await _emailSender.SendEmailAsync(
                 Input.Email,
                 "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                _messageService.GetMessageHtml(HtmlEncoder.Default.Encode(callbackUrl), user?.UserName));
 
             ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             return Page();

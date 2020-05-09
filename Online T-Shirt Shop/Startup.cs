@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Areas.Identity.Services.EmailSender;
+using Online_T_Shirt_Shop.Data;
 using Online_T_Shirt_Shop.Models;
 
 namespace Online_T_Shirt_Shop
@@ -31,11 +34,34 @@ namespace Online_T_Shirt_Shop
             services.AddControllersWithViews();
             services.AddMvc();
 
-            services.AddDbContext<ProductContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ProductContext")));
+            services.AddDbContext<ShopContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ShopContext")));
+
+            services.AddDefaultIdentity<Consumer>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 8;
+                }).AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ShopContext>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthManagerOptions>(Configuration);
+            services.AddSingleton<MessageTemplateService>();
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    options.CallbackPath = new PathString("/account/login/google");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,14 +87,15 @@ namespace Online_T_Shirt_Shop
 
             app.UseAuthorization();
 
+            
             app.UseEndpoints(endpoints =>
-            { 
+            {
+                endpoints.MapControllerRoute(
+                    name: "area",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapControllerRoute(
-                //    name: "area",
-                //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Shop}/{action=Index}/{id?}");
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });

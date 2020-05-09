@@ -1,152 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Online_T_Shirt_Shop.Models;
 
 namespace Online_T_Shirt_Shop.Controllers
 {
     public class ShopController : Controller
     {
-        private readonly ProductContext _context;
+        private readonly ILogger<ShopController> _logger;
 
-        public ShopController(ProductContext context)
+        public ShopController(ILogger<ShopController> logger)
         {
-            _context = context;
+            _logger = logger;
         }
 
-        // GET: Shop
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.T_Shirt.ToListAsync());
-        }
+        void RenderTable() { }
 
-        // GET: Shop/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var t_Shirt = await _context.T_Shirt
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (t_Shirt == null)
-            {
-                return NotFound();
-            }
-
-            return View(t_Shirt);
-        }
-
-        // GET: Shop/Create
-        public IActionResult Create()
+        public IActionResult Index()
         {
             return View();
         }
 
-        // POST: Shop/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ImagePath,Price,InStock")] T_Shirt t_Shirt)
+        public IActionResult Privacy()
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(t_Shirt);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(t_Shirt);
+            return View();
         }
 
-        // GET: Shop/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult AboutUs()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var t_Shirt = await _context.T_Shirt.FindAsync(id);
-            if (t_Shirt == null)
-            {
-                return NotFound();
-            }
-            return View(t_Shirt);
+            return View();
         }
 
-        // POST: Shop/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ImagePath,Price,InStock")] T_Shirt t_Shirt)
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
         {
-            if (id != t_Shirt.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(t_Shirt);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!T_ShirtExists(t_Shirt.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(t_Shirt);
-        }
-
-        // GET: Shop/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var t_Shirt = await _context.T_Shirt
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (t_Shirt == null)
-            {
-                return NotFound();
-            }
-
-            return View(t_Shirt);
-        }
-
-        // POST: Shop/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var t_Shirt = await _context.T_Shirt.FindAsync(id);
-            _context.T_Shirt.Remove(t_Shirt);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool T_ShirtExists(int id)
-        {
-            return _context.T_Shirt.Any(e => e.Id == id);
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
