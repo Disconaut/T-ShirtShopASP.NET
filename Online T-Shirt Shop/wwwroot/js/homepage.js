@@ -6,5 +6,5 @@
 
 function pageMain(scrollController)
 {
-    $("#home-page-header .row img").removeClass("hidden");
+   
 }

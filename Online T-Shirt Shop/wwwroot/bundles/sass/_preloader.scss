@@ -1,0 +1,43 @@
+$spinkit-size: 7em !default;
+$spinkit-spinner-color: #000 !default;
+
+.preloader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: theme-color("primary");
+    z-index: 1031;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader {
+    width: $spinkit-size;
+    height: $spinkit-size;
+    background-color: $spinkit-spinner-color;
+    animation: rotating-plane 1.2s infinite ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .preloader-text {
+        font-size: 7em;
+        color: #fff;
+    }
+}
+
+@keyframes rotating-plane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+
+    50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+}

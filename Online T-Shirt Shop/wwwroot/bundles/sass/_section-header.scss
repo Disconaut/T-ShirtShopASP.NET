@@ -1,0 +1,33 @@
+section {
+    > h1.section-header:first-child {
+        line-height: 1.09em;
+        font-weight: bold;
+        text-transform: uppercase;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: fit-content;
+        margin: 0 auto;
+        opacity: 0;
+
+        > .letters > span.letter {
+            display: inline-block;
+            line-height: 1em;
+        }
+    
+        > span.header-underline {
+            height: 0.125em;
+            position: absolute;
+            background-color: theme-color("primary");
+            z-index: -1;
+            transform-origin: left;
+            bottom: 0.12em;
+            width: 105%;
+        }
+    
+        > span.header-text > span.letter {
+            display: inline-block;
+        }
+    }
+}

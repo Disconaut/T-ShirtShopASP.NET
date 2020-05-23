@@ -31,6 +31,9 @@ namespace Online_T_Shirt_Shop.Models
         [EnumDataType(typeof(TShirtAge)), Required]
         public TShirtAge Age { get; set; }
 
+        [DataType(DataType.Currency), Column(TypeName = "decimal(18,2)"), Required]
+        public decimal Price { get; set; }
+
         public string KeywordsJson { get; set; }
 
         [NotMapped]

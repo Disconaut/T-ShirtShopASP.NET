@@ -42,7 +42,6 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
             }
 
             Email = email;
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
             DisplayConfirmAccountLink = false;
             if (DisplayConfirmAccountLink)
             {

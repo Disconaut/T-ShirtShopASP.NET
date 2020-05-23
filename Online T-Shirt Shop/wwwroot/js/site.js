@@ -46,7 +46,7 @@ function createHeaderScenes(scrollController) {
         }).on("enter",
             (event) => {
                 HeaderAnimation(currentHeader);
-            }).addIndicators({name:"Header"});
+            });
 
         scrollController.addScene(scene);
     });

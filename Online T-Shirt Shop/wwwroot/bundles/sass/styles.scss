@@ -1,0 +1,145 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import "bootstrap-custom/variables-custom";
+@import "./node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "preloader";
+@import "navbar-custom";
+@import "pages/homepage";
+@import "section-header";
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+    position: absolute;
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: theme-color("primary");
+}
+
+.link-primary {
+    @include transition(color 0.4s ease 0s);
+    &:hover {
+        color: theme-color("primary") !important;
+    }
+}
+
+.vertical-divider {
+    width: 0;
+    margin: 0 map-get($spacers, 2);
+    overflow: hidden;
+    border-left: 1px solid #e9ecef;
+}
+
+.responsive-cover-img {
+    object-fit: cover;
+}
+
+#shop .card .card-img-top {
+    object-fit: contain;
+}
+
+.lh-5 {
+    line-height: 3rem !important;
+}
+
+.ls-0_08 {
+    letter-spacing: 0.08rem !important;
+}
+
+.border-top {
+    border-top: 1px solid #f1f1f1;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+
+    @include media-breakpoint-up("md") {
+        //font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 445px;
+    margin-top: 73px;
+    //font-family: "Roboto", Arial, sans-serif;
+
+    @include media-breakpoint-down("sm") {
+        margin-bottom: 1025px;
+    }
+}
+
+.footer {
+    //font-size: 16px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    .subscription-form {
+        > * {
+            @include media-breakpoint-up("md") {
+                max-width: 240px;
+            }
+        }
+    }
+}
+
+small {
+    @include media-breakpoint-down(sm) {
+        font-size: 68.75%;
+    }
+}
+
+.img {
+    object-fit: cover;
+}
+
+// @media (max-width: 350px) {
+//     #new-arrivals-section h1 {
+//         //font-size: 2.45rem !important;
+//     }
+
+//     body {
+//         //font-size: 12px;
+//     }
+
+//     small {
+//         //font-size: 58.75%;
+//     }
+// }
+
+.splitter {
+    position: relative;
+
+    &::before {
+        content: "";
+        height: 100%;
+        width: 2px;
+        background-color: $black;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: rgb(204, 78, 0);
+}
+
+.custom-checkbox .custom-control-input:focus {
+    outline-color: rgb(204, 78, 0);
+}

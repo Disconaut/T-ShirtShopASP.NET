@@ -16,6 +16,8 @@ using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Areas.Identity.Services.EmailSender;
 using Online_T_Shirt_Shop.Data;
 using Online_T_Shirt_Shop.Models;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Online_T_Shirt_Shop
 {
@@ -78,7 +80,16 @@ namespace Online_T_Shirt_Shop
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "node_modules")
+                ),
+                RequestPath = "/npm",
+            });
 
             app.UseRouting();
 

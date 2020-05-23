@@ -1,0 +1,61 @@
+@import "hamburger";
+
+header {
+    font-size: 16px;
+    opacity: 1;
+    top: 0;
+    transition: opacity 0.25s ease-in, top 0.25s ease;
+}
+
+.downscroll {
+    header {
+        @include media-breakpoint-down("lg") {
+            top: -81px;
+            opacity: 0;
+        }
+    }
+}
+
+.navbar-brand {
+    height: 1.77em;
+    width: 5em;
+    background-color: color("black");
+    font-size: 1.7rem;
+    letter-spacing: 0.25em;
+    line-height: 1.4em;
+
+    > a {
+        display: block;
+        width: 100%;
+        color: theme-color("light");
+    }
+}
+
+.navbar-light .navbar-nav .nav-link {
+    @include transition(color 0.4s ease 0s);
+    color: color("black");
+}
+
+.navbar .navbar-nav .nav-link .fas {
+    &.fa-user-circle {
+        font-size: 1.7rem;
+    }
+    &.fa-sign-out-alt {
+        font-size: 1.7rem;
+    }
+}
+
+.navbar .fas.fa-shopping-bag {
+    font-size: 2.375em;
+    /*font-size: 38px;*/
+}
+
+#account-manage {
+    max-width: 300px;
+}
+
+.user-panel {
+    @include media-breakpoint-between(sm, lg) {
+        position: absolute;
+    }
+}

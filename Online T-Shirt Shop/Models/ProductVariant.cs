@@ -20,8 +20,5 @@ namespace Online_T_Shirt_Shop.Models
 
         [Required]
         public int InStock { get; set; }
-        
-        [DataType(DataType.Currency), Column(TypeName = "decimal(18,2)"), Required]
-        public decimal Price { get; set; }
     }
 }

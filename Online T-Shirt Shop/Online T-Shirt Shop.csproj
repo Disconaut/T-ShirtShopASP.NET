@@ -23,5 +23,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\assets\fonts\Avenir LT-35 Light\" />
+    <Folder Include="wwwroot\bundles\sass\pages\" />
   </ItemGroup>
 </Project>

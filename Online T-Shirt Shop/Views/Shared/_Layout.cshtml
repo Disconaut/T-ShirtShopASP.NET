@@ -4,29 +4,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Online T-Shirt Shop</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/all.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/gsap/minified/gsap.min.js"></script>
-    <script src="~/lib/scrollmagic/uncompressed/ScrollMagic.js"></script>
-    <script src="~/lib/scrollmagic/uncompressed/plugins/animation.gsap.js"></script>
-    <script src="~/lib/scrollmagic/uncompressed/plugins/debug.addIndicators.js"></script>
-    <script src="~/lib/scrollmagic/uncompressed/plugins/jquery.ScrollMagic.js"></script>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <script src="~/npm/jquery/dist/jquery.min.js"></script>
+    <script src="~/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/npm/gsap/dist/gsap.min.js"></script>
+    <script src="~/npm/scrollmagic/scrollmagic/minified/ScrollMagic.min.js"></script>
+    <script src="~/npm/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js"></script>
+    <script src="~/npm/scrollmagic/scrollmagic/minified/plugins/jquery.ScrollMagic.min.js"></script>
+    <script src="~/npm/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js"></script>
 </head>
 <body>
     <div class="preloader-overlay justify-content-center align-items-center">
-        <canvas class="logo-loader" width="250" height="91"></canvas>
+        <div class='preloader'><span class="preloader-text">V</span></div>
         <script src="~/js/Preloader.js"></script>
     </div>
     <header class="fixed-top">
-        <nav class="navbar navbar-expand-xl navbar-toggleable-sm navbar-light bg-white mb-3">
-            <div class="container-fluid px-xl-5 px-md-3">
+        <nav class="navbar navbar-expand-xl navbar-light bg-white mb-3">
+            <div class="container-fluid px-xl-12 px-md-4">
 
                 <div class="col-auto col-xl-1 px-0">
                     <div class="navbar-brand position-relative">
-                        <a class="text-center text-uppercase font-weight-bold text-decoration-none stretched-link" asp-area="" asp-controller="Shop" asp-action="Index">VETOL</a>
+                        <a class="link-primary text-center text-uppercase font-weight-bold text-decoration-none stretched-link" asp-area="" asp-controller="Shop" asp-action="Index">VETOL</a>
                     </div>
                 </div>
 
@@ -38,61 +37,47 @@
                 </button>
 
                 <div class="navbar-collapse collapse d-xl-inline-flex flex-md-row-reverse col-xl-10 order-last order-xl-2 mt-2 mt-xl-0">
-                    @*<ul class="navbar-nav pl-sm-5 flex-grow-1">
-                            <li class="nav-item">
-                                <a class="login-link nav-link text-decoration-none d-flex flex-row justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Login">
-                                    <i class="fas fa-user-circle mr-1"></i>Log In
-                                </a>
-                            </li>
-                        </ul>*@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-xl-grow-1 offset-xl-3 nav-fill align-items-xl-stretch align-items-sm-start">
                         <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Shop All</a>
+                            <a class="link-primary nav-link text-decoration-none">Shop All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Women</a>
+                            <a class="link-primary nav-link text-decoration-none">Women</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Men</a>
+                            <a class="link-primary nav-link text-decoration-none">Men</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Kids</a>
+                            <a class="link-primary nav-link text-decoration-none">Kids</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-decoration-none" asp-controller="Shop" asp-action="AboutUs">About</a>
+                            <a class="link-primary nav-link text-decoration-none" asp-controller="Shop" asp-action="AboutUs">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-decoration-none">Contact</a>
+                            <a class="link-primary nav-link text-decoration-none">Contact</a>
                         </li>
                     </ul>
-                    @*<div class="theme-switch-wrapper">
-                            <label class="theme-switch" for="theme-changer">
-                                <input type="checkbox" id="theme-changer"/>
-                                <span class="slider round"></span>
-                            </label>
-                            <em>Enable Dark Mode!</em>
-                        </div>*@
                 </div>
                 <div class="order-3 col-auto col-xl-1 px-0">
                     <button class="ml-xl-auto bg-transparent border-0 d-flex flex-row justify-content-center">
                         <i class="fas fa-shopping-bag"></i>
-                        <span id="item-count-crt" class="text-white position-absolute mt-2h">0</span>
+                        <span id="item-count-crt" class="text-white position-absolute mt-3">0</span>
                     </button>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container-fluid px-xl-5 px-0">
-        <main role="main" class="pb-3">
+    <div class="container-fluid px-xl-12 px-0">
+        <main role="main" class="pb-4">
             @RenderBody()
         </main>
     </div>
 
     <footer class="footer">
-        <div class="container-fluid px-xl-5 px-0">
-            <div class="d-flex justify-content-center align-items-md-baseline align-items-center flex-column flex-sm-row mx-0 pt-5 flex-wrap pt-sm-6">
-                <ul class="nav flex-column align-items-center align-items-sm-start mb-5">
+        <div class="container-fluid px-xl-12 px-0">
+            <div class="d-flex justify-content-center align-items-md-baseline align-items-center bg-dark flex-column flex-sm-row mx-0 pt-12 flex-wrap pt-sm-24">
+                <ul class="nav flex-column align-items-center align-items-sm-start mb-12">
                     <li class="nav-item">
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Shop All</a>
                     </li>
@@ -106,7 +91,7 @@
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Stockists</a>
                     </li>
                 </ul>
-                <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-5t mb-5">
+                <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-16 mb-12">
                     <li class="nav-item">
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">FAQ</a>
                     </li>
@@ -120,7 +105,7 @@
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Payment Methods</a>
                     </li>
                 </ul>
-                <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-5t mb-5">
+                <ul class="nav flex-column align-items-center align-items-sm-start ml-sm-16 mb-12">
                     <li class="nav-item">
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Instagram</a>
                     </li>
@@ -134,10 +119,10 @@
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Twitter</a>
                     </li>
                 </ul>
-                <div class="subscription-form d-flex flex-column col-md-auto col-sm-6 col-10 ml-md-5t mx-0 mb-5 px-0">
+                <div class="subscription-form d-flex flex-column col-md-auto col-sm-6 col-10 ml-md-16 mx-0 mb-12 px-0">
                     <h5 class="text-white ls-0_08 text-center text-md-left mb-0">Join our mailing list</h5>
                     <p class="text-white ls-0_08 text-center text-md-left lh-5 font-weight-light mb-2">and get 10% off</p>
-                    <input type="email" class="form-control text-white font-weight-bold rounded-0 py-1 pr-1 pl-4 mb-2" />
+                    <input type="email" class="form-control text-white font-weight-bold rounded-0 py-1 pr-1 pl-6 mb-2" />
                     <input type="button" class="btn btn-primary rounded-0" value="Subscribe Now" />
                 </div>
             </div>
@@ -148,7 +133,6 @@
             </div>
         </div>
     </footer>
-    @RenderSection("Scripts", required: false)
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
