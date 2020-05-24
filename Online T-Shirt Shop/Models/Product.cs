@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Models.Enums;
-using JsonConverter = System.Text.Json.Serialization.JsonConverter;
 
 namespace Online_T_Shirt_Shop.Models
 {
@@ -19,7 +20,7 @@ namespace Online_T_Shirt_Shop.Models
         [MinLength(3), MaxLength(256), Required] 
         public string Name { get; set; }
 
-        [DataType(DataType.ImageUrl), Required]
+        [DataType(DataType.ImageUrl), Required, DisplayName("Image")]
         public string ImagePath { get; set; }
 
         [DataType(DataType.MultilineText)]
@@ -33,17 +34,6 @@ namespace Online_T_Shirt_Shop.Models
 
         [DataType(DataType.Currency), Column(TypeName = "decimal(18,2)"), Required]
         public decimal Price { get; set; }
-
-        public string KeywordsJson { get; set; }
-
-        [NotMapped]
-        public string[] Keywords
-        {
-            get => JsonConvert.DeserializeObject<string[]>(KeywordsJson);
-            set => KeywordsJson = JsonConvert.SerializeObject(value);
-        }
-
-        public ICollection<ProductVariant> ProductVariants { get; set; }
 
     }
 }

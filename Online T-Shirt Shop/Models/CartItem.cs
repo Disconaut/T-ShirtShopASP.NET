@@ -14,10 +14,10 @@ namespace Online_T_Shirt_Shop.Models
         public string ConsumerId { get; set; }
         
         [Key]
-        public int ProductVariantId { get; set; }
-        public ProductVariant ProductVariant { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
 
-        [Required, Range(1, int.MaxValue)]
+            [Required, Range(1, int.MaxValue)]
         public int Quantity { get; set; }
     }
 }

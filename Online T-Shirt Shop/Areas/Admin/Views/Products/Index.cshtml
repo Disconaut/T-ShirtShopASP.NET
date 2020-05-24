@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Online_T_Shirt_Shop.Models.Product>
+﻿@using System.Text
+@model IEnumerable<Online_T_Shirt_Shop.Models.Product>
 
 @{
     ViewData["Title"] = "Index";
@@ -27,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Age)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -47,6 +51,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

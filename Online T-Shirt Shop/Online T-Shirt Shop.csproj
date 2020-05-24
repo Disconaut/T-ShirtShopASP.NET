@@ -6,6 +6,14 @@
     <UserSecretsId>c0389507-181a-47b7-b146-76865a4a4662</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20200414011433_AddedTShirt.cs" />
+    <Compile Remove="Migrations\20200414011433_AddedTShirt.Designer.cs" />
+    <Compile Remove="Migrations\20200414012753_AddedOrder.cs" />
+    <Compile Remove="Migrations\20200414012753_AddedOrder.Designer.cs" />
+    <Compile Remove="Migrations\20200523181539_MovedPriceToProduct.cs" />
+    <Compile Remove="Migrations\20200523181539_MovedPriceToProduct.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.3" />
@@ -21,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\assets\fonts\Avenir LT-35 Light\" />
     <Folder Include="wwwroot\bundles\sass\pages\" />
   </ItemGroup>

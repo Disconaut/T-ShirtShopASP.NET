@@ -13,8 +13,8 @@ namespace Online_T_Shirt_Shop.Models
         public Order Order { get; set; }
 
         [Key]
-        public int ProductVariantId { get; set; }
-        public ProductVariant ProductVariant { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
 
         [Required]
         public int Quantity { get; set; }

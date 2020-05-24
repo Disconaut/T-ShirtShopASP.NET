@@ -1,4 +1,4 @@
-﻿@model Online_T_Shirt_Shop.Models.Product
+﻿@model Online_T_Shirt_Shop.Areas.Admin.Models.ViewModels.ProductViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form enctype="multipart/form-data" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -19,9 +19,11 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
-                <input asp-for="ImagePath" class="form-control" />
-                <span asp-validation-for="ImagePath" class="text-danger"></span>
+                <div class="custom-file">
+                    <label asp-for="Image" class="custom-file-label"></label>
+                    <input asp-for="Image" class="custom-file-input" />
+                </div>
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -29,20 +31,33 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sex" class="control-label"></label>
-                <select asp-for="Sex" class="form-control"></select>
-                <span asp-validation-for="Sex" class="text-danger"></span>
+                @foreach (var sex in Enum.GetValues(typeof(TShirtSex)))
+                {
+                    <div class="custom-control-inline custom-control custom-radio">
+                        @Html.RadioButtonFor(model => model.Sex, sex, new { id = "sex" + sex.ToString(), @class = "custom-control-input" })
+                        @Html.LabelFor(model => model.Sex, sex.ToString(), new { @for = "sex" + sex.ToString(), @class = "custom-control-label" })
+                    </div>
+                }
             </div>
             <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <select asp-for="Age" class="form-control"></select>
-                <span asp-validation-for="Age" class="text-danger"></span>
+                @foreach (var age in Enum.GetValues(typeof(TShirtAge)))
+                {
+                    <div class="custom-control-inline custom-control custom-radio">
+                        @Html.RadioButtonFor(model => model.Age, age, new { id = "age" + age.ToString(), @class = "custom-control-input" })
+                        @Html.LabelFor(model => model.Age, age.ToString(), new { @for = "age" + age.ToString(), @class = "custom-control-label" })
+                    </div>
+                }
             </div>
             <div class="form-group">
-                <label asp-for="KeywordsJson" class="control-label"></label>
-                <input asp-for="KeywordsJson" class="form-control" />
-                <span asp-validation-for="KeywordsJson" class="text-danger"></span>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="price-prepend">₴</span>
+                    </div>
+                    <input class="form-control" asp-for="Price" aria-describedby="price-prepend" />
+                </div>
+                <span asp-validation-for="Price"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -54,3 +69,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    <script src="~/js/file_input.js"></script>
+}

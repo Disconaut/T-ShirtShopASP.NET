@@ -229,22 +229,6 @@ namespace Online_T_Shirt_Shop.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1f856c0a-0e8f-47e1-989b-23b39205c4bf",
-                            Email = "relaxer@rlx.net",
-                            EmailConfirmed = true,
-                            Gender = "Man",
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "0b601eda-1557-40ee-8a74-1b6bc3c94201",
-                            TwoFactorEnabled = false,
-                            UserName = "Relaxer"
-                        });
                 });
 
             modelBuilder.Entity("Online_T_Shirt_Shop.Models.CartItem", b =>
@@ -252,15 +236,15 @@ namespace Online_T_Shirt_Shop.Migrations
                     b.Property<string>("ConsumerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ProductVariantId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ConsumerId", "ProductVariantId");
+                    b.HasKey("ConsumerId", "ProductId");
 
-                    b.HasIndex("ProductVariantId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartItem");
                 });
@@ -287,15 +271,6 @@ namespace Online_T_Shirt_Shop.Migrations
                     b.HasIndex("ConsumerId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ConsumerId = "1",
-                            Date = new DateTime(2020, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Submission = 29.99m
-                        });
                 });
 
             modelBuilder.Entity("Online_T_Shirt_Shop.Models.OrderProduct", b =>
@@ -303,15 +278,15 @@ namespace Online_T_Shirt_Shop.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductVariantId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId", "ProductVariantId");
+                    b.HasKey("OrderId", "ProductId");
 
-                    b.HasIndex("ProductVariantId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderProduct");
                 });
@@ -331,9 +306,6 @@ namespace Online_T_Shirt_Shop.Migrations
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KeywordsJson")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -357,76 +329,11 @@ namespace Online_T_Shirt_Shop.Migrations
                             Id = 1,
                             Age = (byte)1,
                             Description = "Normal T-Shirt",
-                            ImagePath = "E:\\Coding\\Online T-Shirt Shop\\Online T-Shirt Shop\\wwwroot\\assets\\img\\product_img\\KingCardWhite.png",
-                            KeywordsJson = "[]",
+                            ImagePath = "KingCardWhite.png",
                             Name = "King Card",
                             Price = 0m,
                             Sex = (byte)0
                         });
-                });
-
-            modelBuilder.Entity("Online_T_Shirt_Shop.Models.ProductVariant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("InStock")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VariantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("VariantId");
-
-                    b.ToTable("ProductVariant");
-                });
-
-            modelBuilder.Entity("Online_T_Shirt_Shop.Models.Variant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ColorCode")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(4)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Variant");
-                });
-
-            modelBuilder.Entity("Online_T_Shirt_Shop.Models.Wish", b =>
-                {
-                    b.Property<int>("ConsumerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductVariantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConsumerId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ConsumerId", "ProductVariantId");
-
-                    b.HasIndex("ConsumerId1");
-
-                    b.HasIndex("ProductVariantId");
-
-                    b.ToTable("Wish");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -488,9 +395,9 @@ namespace Online_T_Shirt_Shop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Online_T_Shirt_Shop.Models.ProductVariant", "ProductVariant")
+                    b.HasOne("Online_T_Shirt_Shop.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductVariantId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -512,37 +419,9 @@ namespace Online_T_Shirt_Shop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Online_T_Shirt_Shop.Models.ProductVariant", "ProductVariant")
-                        .WithMany()
-                        .HasForeignKey("ProductVariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Online_T_Shirt_Shop.Models.ProductVariant", b =>
-                {
                     b.HasOne("Online_T_Shirt_Shop.Models.Product", "Product")
-                        .WithMany("ProductVariants")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Online_T_Shirt_Shop.Models.Variant", "Variant")
-                        .WithMany("VariantProducts")
-                        .HasForeignKey("VariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Online_T_Shirt_Shop.Models.Wish", b =>
-                {
-                    b.HasOne("Online_T_Shirt_Shop.Areas.Identity.Data.Consumer", null)
-                        .WithMany("WishList")
-                        .HasForeignKey("ConsumerId1");
-
-                    b.HasOne("Online_T_Shirt_Shop.Models.ProductVariant", "ProductVariant")
                         .WithMany()
-                        .HasForeignKey("ProductVariantId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

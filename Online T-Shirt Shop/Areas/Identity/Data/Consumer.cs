@@ -21,7 +21,6 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Data
         [Column(TypeName = "varchar(5)")]
         public UserGenders Gender { get; set; }
 
-        public ICollection<Wish> WishList { get; set; }
         public ICollection<CartItem> CartItems { get; set; }
     }
 }

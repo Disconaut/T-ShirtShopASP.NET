@@ -27,9 +27,8 @@ namespace Online_T_Shirt_Shop.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Wish>().HasKey(w => new {w.ConsumerId, w.ProductVariantId});
-            modelBuilder.Entity<CartItem>().HasKey(c => new {c.ConsumerId, c.ProductVariantId});
-            modelBuilder.Entity<OrderProduct>().HasKey(o => new {o.OrderId, o.ProductVariantId});
+            modelBuilder.Entity<CartItem>().HasKey(c => new {c.ConsumerId, c.ProductId});
+            modelBuilder.Entity<OrderProduct>().HasKey(o => new {o.OrderId, o.ProductId});
 
             modelBuilder.Entity<Product>().HasData(new []
             {
@@ -40,33 +39,9 @@ namespace Online_T_Shirt_Shop.Data
                     Age = TShirtAge.Adult,
                     Sex = TShirtSex.Man,
                     ImagePath =
-                        @"E:\Coding\Online T-Shirt Shop\Online T-Shirt Shop\wwwroot\assets\img\product_img\KingCardWhite.png",
-                    Keywords = Array.Empty<string>()
+                        @"KingCardWhite.png"
                 }
                 
-            });
-
-            modelBuilder.Entity<Consumer>().HasData(new[]
-            {
-                new Consumer()
-                {
-                    Id = "1",
-                    UserName = "Relaxer",
-                    Email = "relaxer@rlx.net",
-                    EmailConfirmed = true
-                },
-            });
-
-
-            modelBuilder.Entity<Order>().HasData(new[]
-            {
-                new Order
-                {
-                    Id = 1,
-                    ConsumerId = "1",
-                    Date = new DateTime(2020, 04, 03),
-                    Submission = 29.99M
-                }
             });
 
             base.OnModelCreating(modelBuilder);

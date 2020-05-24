@@ -54,8 +54,8 @@ function createHeaderScenes(scrollController) {
 
 
 function main() {
-    var scrollController = new ScrollMagic.Controller();
-    createHeaderScenes(scrollController);
+    //var scrollController = new ScrollMagic.Controller();
+    //createHeaderScenes(scrollController);
 
     var lastScroll = $(window).scrollTop();
     $(window).scroll(() => {
@@ -78,4 +78,4 @@ function main() {
     });
 }
 
-$(window).on("load", () => main());
+$(document).ready(() => main());
