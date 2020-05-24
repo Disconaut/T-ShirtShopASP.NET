@@ -74,3 +74,26 @@ $("#cartForm").submit(function () {
         $("#quantity").val(response);
     });
 });
+
+$("#product-form").submit(function () {
+    var post_url = $(this).attr("action");
+    var form_data = $(this).serialize();
+
+    $.post(post_url, form_data, function (response) {
+        $("#add-to-card").val(response);
+    });
+}); 
+
+$("#card-form").submit(function () {
+    var post_url = $(this).attr("action");
+    var form_data = $(this).serialize();
+
+    if ($("#quantity").value === 1 && $(this).serializeArray()["action"] === "minus") {
+        $.post("localhost:port-delete", $(this).serialize());
+    }
+    else {
+        $.post(post_url, form_data, function(response) {
+            $("#add-to-card").val(response);
+        };
+    }
+});
