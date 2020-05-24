@@ -79,3 +79,13 @@ function main() {
 }
 
 $(document).ready(() => main());
+
+
+$("#card-form").submit(function () {
+    var post_url = $(this).attr("action"); 
+    var form_data = $(this).serialize(); 
+
+    $.post(post_url, form_data, function (response) {
+        $("#quantity").val(response);
+    });
+});
