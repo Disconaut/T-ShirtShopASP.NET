@@ -66,34 +66,20 @@ function main() {
 $(document).ready(() => main());
 
 
-$("#cartForm").submit(function () {
-    var postUrl = $(this).attr("action"); 
-    var formData = $(this).serialize(); 
 
-    $.post(postUrl, formData, function (response) {
-        $("#quantity").val(response);
-    });
-});
 
-$("#product-form").submit(function () {
-    var post_url = $(this).attr("action");
-    var form_data = $(this).serialize();
+$("#cart-form").submit(function () {
+    var postUrl = $(this).attr("action");
+    var formData = $(this).serialize();
 
-    $.post(post_url, form_data, function (response) {
-        $("#add-to-card").val(response);
-    });
-}); 
-
-$("#card-form").submit(function () {
-    var post_url = $(this).attr("action");
-    var form_data = $(this).serialize();
-
-    if ($("#quantity").value === 1 && $(this).serializeArray()["action"] === "minus") {
-        $.post("localhost:port-delete", $(this).serialize());
+    if (($("#quantity").val() === 1 && $(this).serializeArray()["action"] === "minus") || $("#quantity").val() === 0) {
+        $.post("/Delete", $(this).serialize(), function(response) {
+            $("#cart-modal").replaceWith($(response));
+        });
     }
     else {
-        $.post(post_url, form_data, function(response) {
-            $("#add-to-card").val(response);
-        };
+        $.post(postUrl, formData, function(response) {
+            $("#cart-modal").replaceWith($(response));
+        });
     }
 });

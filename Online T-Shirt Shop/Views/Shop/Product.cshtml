@@ -29,7 +29,8 @@
 
             <div class="row mt-6">
                 <div class="col-xl-7 text-left d-xl-flex align-items-xl-center">
-                    <form id="productId" method="post" asp-action="">
+                    <form id="product-form" method="post" asp-action="AddToCart">
+                        @Html.HiddenFor(product => product.Id, new { Value = Model.Id })
                         <div class="form-group">
                             <label><small class="text-muted">Quantity</small></label>
                             <input name="quantity" class="form-control" type="number" />
@@ -86,4 +87,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/product.js"></script>
+}
 
