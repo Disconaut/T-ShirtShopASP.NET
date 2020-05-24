@@ -41,9 +41,13 @@ namespace Online_T_Shirt_Shop.Controllers
             return View();
         }
 
-        public IActionResult Product(int? id)
+        public async Task<IActionResult> Product(int? id)
         {
-            return View();
+            if (id == null || !_shopContext.Products.Any(x => x.Id == id))
+            {
+                return NotFound();
+            }
+            return View(await _shopContext.Products.FindAsync(id));
         }
 
         [HttpPost]

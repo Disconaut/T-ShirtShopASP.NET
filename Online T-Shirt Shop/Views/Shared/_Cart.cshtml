@@ -1,5 +1,9 @@
-﻿@model IEnumerable<CartItem>
+﻿@using Microsoft.AspNetCore.Identity
+@using Online_T_Shirt_Shop.Areas.Identity.Data
+@using Online_T_Shirt_Shop.Data
 
+@inject ShopContext DbContext
+@inject UserManager<Consumer> UserManager
 
 <div role="dialog" tabindex="-1" class="modal fade show" style="display: block;">
     <div class="modal-dialog" role="document">
@@ -8,7 +12,7 @@
                 <h4 class="modal-title">My basket</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                @foreach (var item in Model)
+                @foreach (var item in DbContext.CartItems.Where(item => item.ConsumerId == UserManager.GetUserId(User)))
                 {
                     <div class="row">
                         <div class="col-xl-2 text-center"><img src="~/assets/img/product_img/@item.Product.ImagePath" width="100" /></div>

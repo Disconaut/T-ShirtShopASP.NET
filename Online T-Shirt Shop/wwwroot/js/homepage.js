@@ -4,7 +4,7 @@
     });
 }
 
-function pageMain(scrollController)
+function pageMain()
 {
    
 }

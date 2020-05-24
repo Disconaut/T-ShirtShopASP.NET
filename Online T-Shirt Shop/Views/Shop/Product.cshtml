@@ -1,106 +1,89 @@
-﻿
+﻿@model Product
 @{
     ViewData["Title"] = "Product";
 }
 
+<div class="container mt-24">
+    <div class="row text-center d-xl-flex justify-content-xl-center">
+        <div class="col-xl-5 align-self-center mr-2"><img class="float-right" src="~/assets/img/product_img/@Model.ImagePath" width="500" /></div>
+        <div class="col-xl-5 text-center ml-2">
+            <h1 class="text-left">@Model.Name</h1>
+            <div class="row">
+                <div class="col text-left">
+                    <small class="text-left">@Model.Id</small>
+                </div>
+            </div>
+            <h3 class="text-left text-primary">₴@Model.Price</h3>
+            <div class="row mt-6">
+                <div class="col d-flex flex-column text-left mt-2">
+                    <small class="text-muted d-block">Sex</small>
+                    <span class="text-left d-block">@Model.Sex</span>
+                </div>
+            </div>
+            <div class="row mt-6">
+                <div class="col d-flex flex-column text-left mt-2">
+                    <small class="text-muted d-block">Age</small>
+                    <span class="text-left d-block">@Model.Age</span>
+                </div>
+            </div>
 
-    <body class="d-xl-flex justify-content-xl-center align-items-xl-center">
-        <div class="container">
-            <div class="row text-center d-xl-flex justify-content-xl-center">
-                <div class="col-xl-5 align-self-center mr-2"><img class="float-right" src="TwoHandsWhite.jpg" width="500" /></div>
-                <div class="col-xl-5 text-center ml-2">
-                    <h1 class="text-left">Image name</h1>
-                    <div class="row">
-                        <div class="col text-left">
-                            <small class="text-left">ItemID</small>
+            <div class="row mt-6">
+                <div class="col-xl-7 text-left d-xl-flex align-items-xl-center">
+                    <form id="productId" method="post" asp-action="">
+                        <div class="form-group">
+                            <label><small class="text-muted">Quantity</small></label>
+                            <input name="quantity" class="form-control" type="number" />
+                        </div>
+                        <button class="btn btn-primary w-100 text-center border rounded-0 border-primary mt-2" type="submit">Add to card</button>
+                    </form>
+                </div>
+            </div>
+            <div role="tablist" id="accordion-1" class="mt-12">
+                <div class="card border-left-0 border-top-0 border-right-0 border-dark rounded-0">
+                    <div role="tab" class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1" class="d-flex justify-content-between w-100 text-dark text-decoration-none">
+                                <span>PRODUCT INFO</span>
+                                <span>+</span>
+                            </a>
+                        </h5>
+                    </div>
+                    <div role="tabpanel" data-parent="#accordion-1" class="collapse show item-1">
+                        <div class="card-body">
+                            <p class="card-text visible">@Model.Description</p>
                         </div>
                     </div>
-                    <h3 class="text-left text-primary">25.00$</h3>
-                    <div class="row">
-                        <div class="col text-left mt-2">
-                            <small class="text-left">Color</small>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" id="formCheck-2"/>
-                                <label class="form-check-label" for="formCheck-2">White</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" id="formCheck-1"/>
-                                <label class="form-check-label" for="formCheck-1">Gray</label>
-                            </div>
+                </div>
+                <div class="card border-left-0 border-top-0 border-right-0 border-dark rounded-0">
+                    <div role="tab" class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2" class="d-flex justify-content-between w-100 text-dark text-decoration-none"><span>RETUTN &amp; REFUND POLICY</span><span>+</span></a>
+                        </h5>
+                    </div>
+                    <div role="tabpanel" data-parent="#accordion-1" class="collapse item-2">
+                        <div class="card-body">
+                            <p class="card-text">
+                                Laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue cras ut metus a risus iaculis scelerisque eu ac ante fusce non varius purus aenean nec magna felis fusce vestibulum.
+                            </p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col text-left mt-2">
-                            <small class="text-left">Size</small>
-                        </div>
+                </div>
+                <div class="card border-0 border-dark rounded-0">
+                    <div role="tab" class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3" class="d-flex justify-content-between w-100 text-dark text-decoration-none"><span>SHIPPING INFO</span><span>+</span></a>
+                        </h5>
                     </div>
-                    <div class="dropdown d-xl-flex justify-content-xl-start mt-2 mb-2">
-                        <button class="btn btn-info dropdown-toggle border rounded-0" data-toggle="dropdown" aria-expanded="false" type="button">Select</button>
-                        <div role="menu" class="dropdown-menu">
-                            <a role="presentation" class="dropdown-item" href="#">Small</a>
-                            <a role="presentation" class="dropdown-item" href="#">Medium</a>
-                            <a role="presentation" class="dropdown-item" href="#">Large</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <small class="text-left d-xl-flex justify-content-xl-start mb-2">Quantity</small>
-                        </div>
-                    </div>
-                    <input type="text" class="d-xl-flex justify-content-xl-start" />
-                    <div class="row">
-                        <div class="col-xl-7 text-left d-xl-flex align-items-xl-center">
-                            <button class="btn btn-primary text-center border rounded-0 border-primary d-xl-flex align-items-xl-center mt-2" type="button">Add to card</button>
-                        </div>
-                        <div class="col-xl-5">
-                            <button class="btn btn-primary border rounded-0 mt-2" type="button">Add to wishlist</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-primary mt-2 mb-2 d-flex">Buy now</button>
-                        </div>
-                    </div>
-                    <div role="tablist" id="accordion-1">
-                        <div class="card">
-                            <div role="tab" class="card-header">
-                                <h5 class="mb-0">
-                                    <a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">PRODUCT INFO</a>
-                                </h5>
-                            </div>
-                            <div role="tabpanel" data-parent="#accordion-1" class="collapse show item-1">
-                                <div class="card-body">
-                                    <p class="card-text visible"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div role="tab" class="card-header">
-                                <h5 class="mb-0">
-                                    <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">RETUTN &amp; REFUND POLICY</a>
-                                </h5>
-                            </div>
-                            <div role="tabpanel" data-parent="#accordion-1" class="collapse item-2">
-                                <div class="card-body">
-                                    <p class="card-text"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div role="tab" class="card-header">
-                                <h5 class="mb-0">
-                                    <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">SHIPPING INFO</a>
-                                </h5>
-                            </div>
-                            <div role="tabpanel" data-parent="#accordion-1" class="collapse item-3">
-                                <div class="card-body">
-                                    <p class="card-text"></p>
-                                </div>
-                            </div>
+                    <div role="tabpanel" data-parent="#accordion-1" class="collapse item-3">
+                        <div class="card-body">
+                            <p class="card-text">
+                                Ipsum gravida vel pretium tellus tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</div>
 
