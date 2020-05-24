@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -43,6 +44,51 @@ namespace Online_T_Shirt_Shop.Controllers
         public IActionResult Product(int? id)
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<int> EditCart(string consumerId, int? productId, string action,
+            [Bind("ConsumerId, ProductId, Quantity")]
+            CartItem item)
+        {
+            if (consumerId != item.ConsumerId || productId != item.ProductId)
+            {
+                return -1;
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (action == "plus")
+                    {
+                        item.Quantity += 1;
+                    }else if (action == "minus")
+                    {
+                        item.Quantity -= 1;
+                    }
+                    _shopContext.Update(item);
+                    await _shopContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CartItemExists(item.ConsumerId, item.ProductId))
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return item.Quantity;
+            }
+            return -1;
+        }
+
+        private bool CartItemExists(string consumerId, int? productId)
+        {
+            return _shopContext.CartItems.Any(item => item.ConsumerId == consumerId && item.ProductId == productId);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
