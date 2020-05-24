@@ -44,7 +44,7 @@ namespace Online_T_Shirt_Shop.Data.Seeder
                     Roles.Admin.ToString()).Wait();
             }
         }
-
+        
         public static void SeedRoles
             (RoleManager<IdentityRole> roleManager)
         {
