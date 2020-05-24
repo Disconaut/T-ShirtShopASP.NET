@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CartItem>
+
+
+<div role="dialog" tabindex="-1" class="modal fade show" style="display: block;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">My basket</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="col-xl-2 text-center"><img src="~/assets/img/product_img/@item.Product.ImagePath" width="100" /></div>
+                        <div class="col-xl-10">
+                            <div class="row">
+                                <div class="col-xl-3">
+                                    <h1>@item.Product.Name</h1>
+                                </div>
+
+                                <div class="col">
+                                    <form id="cartForm" class="form-inline" asp-action="EditCart" method="post">
+                                        @Html.HiddenFor(modelItem => item.ConsumerId, new { Value = item.ConsumerId })
+                                        @Html.HiddenFor(modelItem => item.ProductId, new { Value = item.ProductId })
+                                        <button class="btn btn-primary border rounded-0 mb-2 mr-2" type="submit" name="action" value="minus">-</button>
+                                        <input id="quantity" asp-for="@item.Quantity" class="mt-3" onchange="$('#cartForm').submit()" />
+                                        <button class="btn btn-primary border rounded-0 mb-2 ml-2" type="submit" name="action" value="plus">+</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <h5 class="mt-3">Price: @(item.Product.Price * item.Quantity)</h5>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Order</button></div>
+        </div>
+    </div>
+</div>
+
+@*<div class="container">
+        <div class="row">
+            <div class="col-xl-2 text-center"><img src="TwoHandsWhite.jpg" width="100" /></div>
+            <div class="col-xl-10">
+                <div class="row">
+                    <div class="col-xl-3">
+                        <h1>Item Name</h1>
+                    </div>
+                    <div class="col"><button class="btn btn-primary border rounded-0 mb-2 mr-2" type="button">-</button><input type="text" class="mt-3" /><button class="btn btn-primary border rounded-0 mb-2 ml-2" type="button">+</button></div>
+                </div>
+                <h5 class="mt-3">Price:<label> 25.00$</label></h5>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary border rounded-0" type="button">Order</button>*@
