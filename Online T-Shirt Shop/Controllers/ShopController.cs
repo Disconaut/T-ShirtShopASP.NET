@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Data;
 using Online_T_Shirt_Shop.Models;
+using Online_T_Shirt_Shop.Models.Enums;
 
 namespace Online_T_Shirt_Shop.Controllers
 {
@@ -28,10 +29,23 @@ namespace Online_T_Shirt_Shop.Controllers
         }
 
         void RenderTable() { }
-
         public IActionResult Index()
         {
             var lastProducts = _shopContext.Products.OrderBy(x=> -x.Id).Take(16).Select(x => x);
+            return View(lastProducts);
+        }
+
+        public IActionResult ShopMan()
+        {
+            var lastProducts = _shopContext.Products.Where(x => x.Sex == TShirtSex.Man || x.Sex == TShirtSex.Unisex);
+
+            return View(lastProducts);
+        }
+
+        public IActionResult ShopWoman()
+        {
+            var lastProducts = _shopContext.Products.Where(x => x.Sex == TShirtSex.Woman || x.Sex == TShirtSex.Unisex);
+
             return View(lastProducts);
         }
 
