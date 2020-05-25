@@ -49,12 +49,12 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [RegularExpression(@"^[A-Z][a-z]*'[a-z]+$", ErrorMessage = "Invalid format of first name")]
+            [RegularExpression(@"^[A-Z][a-z]*'?[a-z]+$", ErrorMessage = "Invalid format of first name")]
             [Display(Name="First name")]
             public string FirstName { get; set; }
 
             [Required]
-            [RegularExpression(@"^[A-Z][a-z]*'[a-z]+$", ErrorMessage = "Invalid format of last name")]
+            [RegularExpression(@"^[A-Z][a-z]*'?[a-z]+$", ErrorMessage = "Invalid format of last name")]
             [Display(Name="Last name")]
             public string LastName { get; set; }
 
@@ -73,6 +73,12 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+            
         }
 
         public async Task OnGetAsync(string returnUrl = null)
