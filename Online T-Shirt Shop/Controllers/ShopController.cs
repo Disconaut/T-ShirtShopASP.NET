@@ -85,7 +85,7 @@ namespace Online_T_Shirt_Shop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCart(string consumerId, int? productId, string action,
+        public async Task<IActionResult> EditCart([FromForm(Name = "item.ConsumerId")]string consumerId, [FromForm(Name = "item.ProductId")]int? productId, [FromForm(Name = "sign")]string sign,
             [Bind("ConsumerId, ProductId, Quantity")]
             CartItem item)
         {
@@ -98,10 +98,10 @@ namespace Online_T_Shirt_Shop.Controllers
             {
                 try
                 {
-                    if (action == "plus")
+                    if (sign == "plus")
                     {
                         item.Quantity += 1;
-                    }else if (action == "minus")
+                    }else if (sign == "minus")
                     {
                         item.Quantity -= 1;
                     }

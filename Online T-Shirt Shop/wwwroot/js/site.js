@@ -64,22 +64,3 @@ function main() {
 }
 
 $(document).ready(() => main());
-
-
-
-
-$("#cart-form").submit(function () {
-    var postUrl = $(this).attr("action");
-    var formData = $(this).serialize();
-
-    if (($("#quantity").val() === 1 && $(this).serializeArray()["action"] === "minus") || $("#quantity").val() === 0) {
-        $.post("/Delete", $(this).serialize(), function(response) {
-            $("#cart-modal").replaceWith($(response));
-        });
-    }
-    else {
-        $.post(postUrl, formData, function(response) {
-            $("#cart-modal").replaceWith($(response));
-        });
-    }
-});
