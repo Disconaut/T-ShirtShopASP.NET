@@ -49,6 +49,14 @@ namespace Online_T_Shirt_Shop.Controllers
             return View(lastProducts);
         }
 
+        public IActionResult ShopKid()
+        {
+            var lastProducts = _shopContext.Products.Where(x => x.Sex == TShirtSex.Man || x.Sex == TShirtSex.Unisex && x.Age == TShirtAge.Kid);
+
+            return View(lastProducts);
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
