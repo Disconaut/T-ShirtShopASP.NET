@@ -100,5 +100,42 @@ namespace Online_T_Shirt_Shop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        [HttpPost]
+        public async Task<int> DeleteFromCard(string consumerId, int? productId, string action,
+            [Bind("ConsumerId, ProductId, Quantity")]
+            CartItem item)
+        {
+            if (consumerId != item.ConsumerId || productId != item.ProductId)
+            {
+                return -1;
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _shopContext.Remove(item);
+                    await _shopContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CartItemExists(item.ConsumerId, item.ProductId))
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return item.Quantity;
+            }
+            return -1;
+        }
+
     }
+
+
 }
