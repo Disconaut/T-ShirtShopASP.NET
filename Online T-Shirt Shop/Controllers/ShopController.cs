@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Data;
 using Online_T_Shirt_Shop.Models;
 
@@ -16,11 +18,13 @@ namespace Online_T_Shirt_Shop.Controllers
     {
         private readonly ILogger<ShopController> _logger;
         private readonly ShopContext _shopContext;
+        private readonly UserManager<Consumer> _userManager;
 
-        public ShopController(ILogger<ShopController> logger, ShopContext shopContext)
+        public ShopController(ILogger<ShopController> logger, ShopContext shopContext, UserManager<Consumer> userManager)
         {
             _logger = logger;
             _shopContext = shopContext;
+            _userManager = userManager;
         }
 
         void RenderTable() { }
@@ -51,13 +55,43 @@ namespace Online_T_Shirt_Shop.Controllers
         }
 
         [HttpPost]
-        public async Task<int> EditCart(string consumerId, int? productId, string action,
+        public async Task<IActionResult> AddToCart(int? id, int? quantity, [Bind("Id")] Product product)
+        {
+            if (product.Id != id)
+            {
+                return NotFound();
+            }
+
+            var item = await _shopContext.CartItems.FindAsync(_userManager.GetUserId(User), product.Id);
+            if (item == null)
+            {
+                item = new CartItem
+                {
+                    ConsumerId = _userManager.GetUserId(User),
+                    ProductId = product.Id,
+                    Quantity = quantity ?? 1
+                };
+
+                _shopContext.Add(item);
+            }
+            else
+            {
+                item.Quantity += quantity??1;
+                _shopContext.Update(item);
+            }
+
+            _shopContext.SaveChanges();
+            return PartialView("_Cart");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCart(string consumerId, int? productId, string action,
             [Bind("ConsumerId, ProductId, Quantity")]
             CartItem item)
         {
             if (consumerId != item.ConsumerId || productId != item.ProductId)
             {
-                return -1;
+                return NotFound();
             }
 
             if (ModelState.IsValid)
@@ -78,16 +112,16 @@ namespace Online_T_Shirt_Shop.Controllers
                 {
                     if (!CartItemExists(item.ConsumerId, item.ProductId))
                     {
-                        return -1;
+                        return NotFound();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return item.Quantity;
+                return PartialView("_Cart");
             }
-            return -1;
+            return Error();
         }
 
         private bool CartItemExists(string consumerId, int? productId)
