@@ -31,7 +31,7 @@ namespace Online_T_Shirt_Shop.Controllers
 
         public IActionResult Index()
         {
-            var lastProducts = _shopContext.Products.OrderBy(x=> -x.Id).Take(16).Select(x => x);
+            var lastProducts = _shopContext.Products.OrderBy(x => -x.Id).Take(16).Select(x => x);
             return View(lastProducts);
         }
 
@@ -76,7 +76,7 @@ namespace Online_T_Shirt_Shop.Controllers
             }
             else
             {
-                item.Quantity += quantity??1;
+                item.Quantity += quantity ?? 1;
                 _shopContext.Update(item);
             }
 
@@ -85,7 +85,7 @@ namespace Online_T_Shirt_Shop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCart([FromForm(Name = "item.ConsumerId")]string consumerId, [FromForm(Name = "item.ProductId")]int? productId, [FromForm(Name = "sign")]string sign,
+        public async Task<IActionResult> EditCart([FromForm(Name = "item.ConsumerId")]string consumerId, [FromForm(Name = "item.ProductId")]int? productId,
             [Bind("ConsumerId, ProductId, Quantity")]
             CartItem item)
         {
@@ -98,13 +98,6 @@ namespace Online_T_Shirt_Shop.Controllers
             {
                 try
                 {
-                    if (sign == "plus")
-                    {
-                        item.Quantity += 1;
-                    }else if (sign == "minus")
-                    {
-                        item.Quantity -= 1;
-                    }
                     _shopContext.Update(item);
                     await _shopContext.SaveChangesAsync();
                 }
@@ -137,36 +130,33 @@ namespace Online_T_Shirt_Shop.Controllers
 
 
         [HttpPost]
-        public async Task<int> DeleteFromCard(string consumerId, int? productId, string action,
+        public async Task<IActionResult> DeleteFromCart([FromForm(Name = "item.ConsumerId")]string consumerId, [FromForm(Name = "item.ProductId")]int? productId,
             [Bind("ConsumerId, ProductId, Quantity")]
             CartItem item)
         {
             if (consumerId != item.ConsumerId || productId != item.ProductId)
             {
-                return -1;
+                return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _shopContext.Remove(item);
-                    await _shopContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CartItemExists(item.ConsumerId, item.ProductId))
-                    {
-                        return -1;
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return item.Quantity;
+                _shopContext.CartItems.Remove(item);
+                await _shopContext.SaveChangesAsync();
             }
-            return -1;
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CartItemExists(item.ConsumerId, item.ProductId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return PartialView("_Cart");
+
         }
 
     }

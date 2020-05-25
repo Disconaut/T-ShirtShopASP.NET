@@ -12,20 +12,19 @@ $("#cart-modal").on("hidden.bs.modal",
         cartModalShown = false;
     });
 
-$(".cart-form").submit(function (e) {
+$("form").submit(function (e) {
     e.preventDefault();
     e.stopPropagation();
-    var postUrl = $(this).attr("action");
     var formData = $(this).serialize();
 
     if ($(this).find('[id^="quantity-"').val() <= 0) {
-        $.post("/DeleteFromCart", $(this).serialize(), function (response) {
-            $("#cart-modal").replaceWith($(response));
+        $.post("Shop/DeleteFromCart", formData, function (response) {
+            $("#cart-modal").replaceWith(response);
         });
     }
     else {
-        $.post(postUrl, formData, function (response) {
-            $("#cart-modal").replaceWith($(response));
+        $.post("Shop/EditCart", formData, function (response) {
+            $("#cart-modal").replaceWith(response);
         });
     }
 });
