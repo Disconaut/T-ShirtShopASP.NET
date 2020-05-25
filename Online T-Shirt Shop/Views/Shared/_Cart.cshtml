@@ -43,7 +43,7 @@
                         </div>
                     }
                 </div>
-                <div class="modal-footer"><span>Price: ₴@totalPrice</span><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Order</button></div>
+                <div class="modal-footer"><span>Price: ₴@totalPrice</span><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><form asp-action="ClearCart" method="post"><button id="orderBtn" class="btn btn-primary" type="submit">Order</button></form></div>
             </div>
         </div>
         <script src="~/js/cart.js"></script>

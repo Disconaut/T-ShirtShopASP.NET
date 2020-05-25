@@ -131,6 +131,15 @@ namespace Online_T_Shirt_Shop.Controllers
             return Error();
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> ClearCart()
+        {
+            _shopContext.CartItems.RemoveRange(_shopContext.CartItems.Where(item=>item.ConsumerId == _userManager.GetUserId(User)).Select(x=>x).ToList());
+            _shopContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         private bool CartItemExists(string consumerId, int? productId)
         {
             return _shopContext.CartItems.Any(item => item.ConsumerId == consumerId && item.ProductId == productId);

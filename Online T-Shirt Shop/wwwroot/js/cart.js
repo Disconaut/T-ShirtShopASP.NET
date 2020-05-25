@@ -12,7 +12,7 @@ $("#cart-modal").on("hidden.bs.modal",
         cartModalShown = false;
     });
 
-$("form").submit(function (e) {
+$(".cart-form").submit(function (e) {
     e.preventDefault();
     e.stopPropagation();
     var formData = $(this).serialize();
@@ -28,3 +28,7 @@ $("form").submit(function (e) {
         });
     }
 });
+
+$("#orderBtn").click(function() {
+    alert('Order is successful');
+})
