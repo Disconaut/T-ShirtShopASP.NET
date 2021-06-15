@@ -19,12 +19,14 @@ namespace Online_T_Shirt_Shop.Models
         [Required]
         public string ConsumerId { get; set; }
         [ForeignKey("ConsumerId")]
+        [Display(Name = "Consumer UserName")]
         public Consumer Consumer { get; set; }
 
         [DataType(DataType.Currency), Column(TypeName = "decimal(18, 2)"), Required]
         public decimal Submission { get; set; }
 
         [Required]
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        [Display(Name="Products")]
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

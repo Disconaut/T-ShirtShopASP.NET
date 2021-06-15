@@ -3,16 +3,11 @@
     ViewData["Title"] = "Product";
 }
 
-<div class="container mt-24">
+<div class="container mt-24 pt-11 pb-16">
     <div class="row text-center d-xl-flex justify-content-xl-center">
         <div class="col-xl-5 align-self-center mr-2"><img class="float-right" src="~/assets/img/product_img/@Model.ImagePath" width="500" /></div>
         <div class="col-xl-5 text-center ml-2">
             <h1 class="text-left">@Model.Name</h1>
-            <div class="row">
-                <div class="col text-left">
-                    <small class="text-left">@Model.Id</small>
-                </div>
-            </div>
             <h3 class="text-left text-primary">₴@Model.Price</h3>
             <div class="row mt-6">
                 <div class="col d-flex flex-column text-left mt-2">
@@ -28,18 +23,18 @@
             </div>
 
             <div class="row mt-6">
-                <div class="col-xl-7 text-left d-xl-flex align-items-xl-center">
-                    <form id="product-form" method="post" asp-action="AddToCart">
-                        @Html.HiddenFor(product => product.Id, new { Value = Model.Id })
-                        <div class="form-group">
+                <div class="col text-left d-xl-flex align-items-xl-center">
+                    <form id="product-form" method="post" asp-action="AddToCart" class="w-100">
+                        <input type="hidden" value="@Model.Id" name="productId"/>
+                        <div class="form-group quantity-group">
                             <label><small class="text-muted">Quantity</small></label>
-                            <input name="quantity" class="form-control" type="number" />
+                            <input name="quantity" class="form-control" min="1" value="1" type="number" />
                         </div>
                         <button class="btn btn-primary w-100 text-center border rounded-0 border-primary mt-2" type="submit">Add to card</button>
                     </form>
                 </div>
             </div>
-            <div role="tablist" id="accordion-1" class="mt-12">
+            <div role="tablist" id="accordion-1" class="mt-12 product-accordion">
                 <div class="card border-left-0 border-top-0 border-right-0 border-dark rounded-0">
                     <div role="tab" class="card-header bg-white">
                         <h5 class="mb-0">

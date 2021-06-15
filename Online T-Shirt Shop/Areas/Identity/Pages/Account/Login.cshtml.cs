@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Areas.Identity.Services.EmailSender;
@@ -57,9 +60,6 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
-
-            [Display(Name = "Remember me?")]
-            public bool RememberMe { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -69,7 +69,7 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.RouteUrl("default", new { Controller = "Shop", Action = "Index" });
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -90,11 +90,12 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user == null)
                 {
+                    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
 
-                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe,
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, true,
                     lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
@@ -103,7 +104,7 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = true });
                 }
                 if (result.IsLockedOut)
                 {
@@ -112,11 +113,14 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
             }
 
+
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             // If we got this far, something failed, redisplay form
             return Page();
         }
@@ -134,21 +138,24 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, "There is no user with email " + Input.Email);
             }else if (user.EmailConfirmed)
             {
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
                 ModelState.AddModelError(string.Empty, "Your email is verified");
+                return Page();
             }
 
             var userId = await _userManager.GetUserIdAsync(user);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(await _userManager.GenerateEmailConfirmationTokenAsync(user)));
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { userId = userId, code = code },
+                values: new { userId = userId, code = HttpUtility.UrlEncode(code) },
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 Input.Email,
                 "Confirm your email",
-                _messageService.GetMessageHtml(HtmlEncoder.Default.Encode(callbackUrl), user?.UserName));
+                _messageService.GetMessageHtml(callbackUrl, user?.UserName));
 
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             return Page();
         }

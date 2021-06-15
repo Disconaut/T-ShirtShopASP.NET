@@ -2,20 +2,13 @@
 @model RegisterConfirmationModel
 @{
     ViewData["Title"] = "Register confirmation";
+    Layout = "../Shared/_Layout";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-        <p>
-            Check your email and confirm it.
-        </p>
-    }
-    else
-    {
-        <p>
-            Please check your email to confirm your account.
-        </p>
-    }
-}
+<section class="main-section">
+    <h1 class="header">Register Confirmation</h1>
+
+    <p>
+        Please check your email to confirm your account.
+    </p>
+</section>

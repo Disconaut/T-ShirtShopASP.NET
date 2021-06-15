@@ -39,7 +39,7 @@ namespace Online_T_Shirt_Shop.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.Consumer)
+                .Include(o => o.Consumer).Include(x => x.OrderProducts).ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Online_T_Shirt_Shop.Areas.Identity.Data.Enums
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,7 +9,6 @@
     <link rel="stylesheet" href="~/css/styles.css" />
     <script src="~/npm/jquery/dist/jquery.min.js"></script>
     <script src="~/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/globals.js"></script>
 </head>
 <body>
     <div class="preloader-overlay justify-content-center align-items-center">
@@ -36,24 +36,36 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-xl-grow-1 offset-xl-3 nav-fill align-items-xl-stretch align-items-sm-start">
                         <li class="nav-item">
-                            <a class="link-primary nav-link text-decoration-none" asp-action="ShopAll">Shop All</a>
+                            <a class="link-primary nav-link text-decoration-none" asp-action="All">Shop All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="link-primary nav-link text-decoration-none" asp-action="ShopWoman">Women</a>
+                            <a class="link-primary nav-link text-decoration-none" asp-action="Women">Women</a>
                         </li>
                         <li class="nav-item">
-                            <a class="link-primary nav-link text-decoration-none" asp-action="ShopMan">Men</a>
+                            <a class="link-primary nav-link text-decoration-none" asp-action="Men">Men</a>
                         </li>
                         <li class="nav-item">
-                            <a class="link-primary nav-link text-decoration-none" asp-action="ShopKid">Kids</a>
+                            <a class="link-primary nav-link text-decoration-none" asp-action="Kids">Kids</a>
                         </li>
                         <li class="nav-item">
                             <a class="link-primary nav-link text-decoration-none" asp-controller="Shop" asp-action="AboutUs">About</a>
                         </li>
+                        @if (User.IsInRole(Roles.Admin.ToString()))
+                        {
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="admin-dropdown">Admin</a>
+                                    <div class="dropdown-menu" id="admin-dropdown">
+                                        <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="dropdown-item">Products</a>
+                                        <a asp-area="Admin" asp-controller="Orders" asp-action="Index" class="dropdown-item">Orders</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="order-3 col-auto col-xl-1 px-0">
-                    <button class="ml-xl-auto bg-transparent border-0 d-flex flex-row justify-content-center" data-toggle="modal" data-target="#cart-modal">
+                    <button class="ml-xl-auto bg-transparent border-0 d-flex flex-row justify-content-center" onclick="openCart()">
                         <i class="fas fa-shopping-bag"></i>
                         <span id="item-count-crt" class="text-white position-absolute mt-3">0</span>
                     </button>
@@ -72,10 +84,10 @@
             <div class="d-flex justify-content-center align-items-md-baseline align-items-center bg-dark flex-column flex-sm-row mx-0 pt-12 flex-wrap pt-sm-24">
                 <ul class="nav flex-column align-items-center align-items-sm-start mb-12">
                     <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">Shop All</a>
+                        <a asp-controller="Shop" asp-action="All" class="nav-link d-flex align-items-center text-white py-0">Shop All</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-white py-0">About</a>
+                        <a asp-controller="Shop" asp-action="AboutUs" class="nav-link d-flex align-items-center text-white py-0">About</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link d-flex align-items-center text-white py-0">Contact</a>
@@ -125,14 +137,22 @@
                 </small>
             </div>
         </div>
-    </footer>
+</footer>
 
-<partial name="_Cart"/>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+<div id="modalSpace"></div>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    function openCart() {
+        $.ajax('@Url.Action("Cart", "Shop")').then(data => {
+            $('#modalSpace').append($(data));
+            $("#cart-modal").modal();
+            $('#cart-modal').on('hidden.bs.modal',
+                function(e) {
+                    onModalClose('#cart-modal');
+                });
+        });
+    }
+</script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-
-
-@*<body>
-    </body>*@

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Online_T_Shirt_Shop.Areas.Identity.Data
+@using Microsoft.AspNetCore.Http.Extensions
 
 @inject SignInManager<Consumer> SignInManager
 @inject UserManager<Consumer> UserManager
@@ -8,13 +9,13 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <li class="nav-item">
-                <a id="account-manage" class="link-primary nav-link d-inline-block text-decoration-none text-truncate" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <a id="account-manage" class="link-primary nav-link d-inline-block text-decoration-none text-truncate" href="#">
                     <i class="fas fa-user-circle mr-1"></i>@UserManager.GetUserName(User)
                 </a>
             </li>
             <li class="d-none d-md-block vertical-divider"></li>
             <li class="nav-item">
-                <form id="logoutForm" class="form-inline justify-content-sm-start justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <form id="logoutForm" class="form-inline justify-content-sm-start justify-content-center align-items-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Shop", new { area = "" })">
                     <button id="logout" type="submit" class="link-primary nav-link d-flex align-items-center btn btn-link text-decoration-none"><i class="fas fa-sign-out-alt mr-1 mr-sm-0"></i><span class="d-md-none">Logout</span></button>
                 </form>
             </li>
@@ -22,7 +23,7 @@
         else
         {
             <li class="nav-item">
-                <a class="link-primary nav-link text-decoration-none d-flex flex-row align-items-center" asp-area="Identity" asp-page="/Account/Login">
+                <a class="link-primary nav-link text-decoration-none d-flex flex-row align-items-center" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.ActionContext.HttpContext.Request.GetEncodedUrl()">
                     <i class="fas fa-user-circle mr-1"></i>Log In
                 </a>
             </li>

@@ -51,12 +51,73 @@
 //        scrollController.addScene(scene);
 //    });
 //}
+function reloadCartCounter() {
+    $.ajax('/Shop/CartCounter').then((data) => {
+        $('#item-count-crt').text(data);
+    });
+}
 
+function onModalClose(selector) {
+    $(selector).remove();
+}
+
+// -- < Cart
+
+function changeQuantity(fieldSelector, action) {
+    let quantity = parseInt($(fieldSelector).val());
+    if (action === 'increase') {
+        quantity += 1;
+    } else if(action === 'decrease') {
+        quantity -= 1;
+    }
+
+    $(fieldSelector).val(quantity);
+    $(fieldSelector).change();
+}
+
+function onQuantityChange(productId, targetSelector, productTotalSelector, totalSelector, subtotalSelector) {
+    const target = $(targetSelector);
+    $.ajax(`/EditCart/${productId}/${target.val()}`,
+        {
+            method: 'POST',
+        }).then(data => {
+            target.val(data.quantity);
+            $(productTotalSelector).text(data.productTotal);
+            $(totalSelector).text(data.total);
+            $(subtotalSelector).text(data.total);
+            reloadCartCounter();
+    }).catch(() => {
+        alert("Sorry, we cannot update your cart. Please, inform us about this problem.");
+    });
+}
+
+function onRemoveClick(productId, productSelector, totalSelector, subtotalSelector) {
+    $.ajax(`/DeleteFromCart/${productId}`,
+        {
+            method: 'POST'
+        }).then((data) => {
+            $(productSelector).remove();
+            $(totalSelector).text(data);
+            $(subtotalSelector).text(data);
+            reloadCartCounter();
+    });
+}
+
+function onOrderClick() {
+    $.ajax('/Shop/Order', { method: 'POST' }).then(() => {
+        alert('Your order is successfully created.');
+        location.reload();
+    }).catch(() => {
+        alert('Cannot create order for you. Maybe, you have nothing to order.');
+    });
+}
+
+// -- />
 
 function main() {
     //var scrollController = new ScrollMagic.Controller();
     //createHeaderScenes(scrollController);
-
+    reloadCartCounter();
     $("main").hide().fadeIn(400, function () {
         if(typeof pageMain === "function")
             pageMain();

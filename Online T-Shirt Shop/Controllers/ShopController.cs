@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Online_T_Shirt_Shop.Areas.Identity.Data;
 using Online_T_Shirt_Shop.Data;
+using Online_T_Shirt_Shop.Extensions;
 using Online_T_Shirt_Shop.Models;
 using Online_T_Shirt_Shop.Models.Enums;
 
@@ -21,37 +24,44 @@ namespace Online_T_Shirt_Shop.Controllers
         private readonly ShopContext _shopContext;
         private readonly UserManager<Consumer> _userManager;
 
-        public ShopController(ILogger<ShopController> logger, ShopContext shopContext, UserManager<Consumer> userManager)
+        public ShopController(ILogger<ShopController> logger, ShopContext shopContext,
+            UserManager<Consumer> userManager)
         {
             _logger = logger;
             _shopContext = shopContext;
             _userManager = userManager;
         }
 
-        void RenderTable() { }
         public IActionResult Index()
         {
             var lastProducts = _shopContext.Products.OrderBy(x => -x.Id).Take(16).Select(x => x);
             return View(lastProducts);
         }
 
-        public IActionResult ShopMan()
+        public IActionResult All()
+        {
+            var lastProducts = _shopContext.Products;
+
+            return View(lastProducts);
+        }
+
+        public IActionResult Men()
         {
             var lastProducts = _shopContext.Products.Where(x => x.Sex == TShirtSex.Man || x.Sex == TShirtSex.Unisex);
 
             return View(lastProducts);
         }
 
-        public IActionResult ShopWoman()
+        public IActionResult Women()
         {
             var lastProducts = _shopContext.Products.Where(x => x.Sex == TShirtSex.Woman || x.Sex == TShirtSex.Unisex);
 
             return View(lastProducts);
         }
 
-        public IActionResult ShopKid()
+        public IActionResult Kids()
         {
-            var lastProducts = _shopContext.Products.Where(x => x.Sex == TShirtSex.Man || x.Sex == TShirtSex.Unisex && x.Age == TShirtAge.Kid);
+            var lastProducts = _shopContext.Products.Where(x => x.Age == TShirtAge.Kid);
 
             return View(lastProducts);
         }
@@ -67,85 +77,192 @@ namespace Online_T_Shirt_Shop.Controllers
             return View();
         }
 
+        public PartialViewResult Cart()
+        {
+            var userId = _userManager.GetUserId(User);
+            IEnumerable<CartItem> items;
+            if (userId == null)
+            {
+                items = HttpContext.Session.Get<Dictionary<int, CartItem>>("cart")?.Values ??
+                        Enumerable.Empty<CartItem>();
+            }
+            else
+            {
+                items = _shopContext.CartItems.Include(x => x.Product).Where(x => x.ConsumerId == userId);
+            }
+
+            return PartialView("_Cart", items);
+        }
+
+        public JsonResult CartCounter()
+        {
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
+            {
+                var cart = HttpContext.Session.Get<Dictionary<int, CartItem>>("cart")?.Values ??
+                           Enumerable.Empty<CartItem>();
+                return Json(cart.Sum(x => x.Quantity));
+            }
+            else
+            {
+                return Json(
+                    _shopContext.CartItems.Where(x => x.ConsumerId == userId).Sum(x => x.Quantity));
+            }
+        }
+
         public async Task<IActionResult> Product(int? id)
         {
             if (id == null || !_shopContext.Products.Any(x => x.Id == id))
             {
                 return NotFound();
             }
+
             return View(await _shopContext.Products.FindAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int? id, int? quantity, [Bind("Id")] Product product)
+        public async Task<IActionResult> AddToCart(int? productId, int? quantity)
         {
-            if (product.Id != id)
+            if (productId == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var item = await _shopContext.CartItems.FindAsync(_userManager.GetUserId(User), product.Id);
-            if (item == null)
+            var product = await _shopContext.Products.FindAsync(productId);
+            if (product == null)
             {
-                item = new CartItem
-                {
-                    ConsumerId = _userManager.GetUserId(User),
-                    ProductId = product.Id,
-                    Quantity = quantity ?? 1
-                };
+                return BadRequest();
+            }
 
-                _shopContext.Add(item);
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
+            {
+                var cart = HttpContext.Session.Get<Dictionary<int, CartItem>>("cart") ??
+                           new Dictionary<int, CartItem>();
+                if (cart.ContainsKey(productId.Value))
+                {
+                    cart[productId.Value].Quantity += quantity ?? 1;
+                }
+                else
+                {
+                    cart.Add(productId.Value, new CartItem
+                    {
+                        ConsumerId = userId,
+                        ProductId = productId.Value,
+                        Product = product,
+                        Quantity = quantity ?? 1
+                    });
+                }
+
+                HttpContext.Session.Set("cart", cart);
             }
             else
             {
-                item.Quantity += quantity ?? 1;
-                _shopContext.Update(item);
+                var item = await _shopContext.CartItems.FindAsync(userId, productId);
+
+                if (item == null)
+                {
+                    item = new CartItem
+                    {
+                        ConsumerId = userId,
+                        ProductId = productId.Value,
+                        Quantity = quantity ?? 1
+                    };
+
+                    _shopContext.Add(item);
+                }
+                else
+                {
+                    item.Quantity += quantity ?? 1;
+                    _shopContext.Update(item);
+                }
             }
 
             _shopContext.SaveChanges();
-            return PartialView("_Cart");
+            return Ok();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EditCart([FromForm(Name = "item.ConsumerId")]string consumerId, [FromForm(Name = "item.ProductId")]int? productId,
-            [Bind("ConsumerId, ProductId, Quantity")]
-            CartItem item)
+        [HttpPost("EditCart/{productId:int}/{newQuantity:int}")]
+        public async Task<ActionResult> EditCart(int? productId, int? newQuantity)
         {
-            if (consumerId != item.ConsumerId || productId != item.ProductId)
+            if (productId == null || newQuantity == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                var userId = _userManager.GetUserId(User);
+                Product product;
+                decimal total;
+                decimal productTotal;
+                if (userId == null)
                 {
-                    _shopContext.Update(item);
-                    await _shopContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CartItemExists(item.ConsumerId, item.ProductId))
+                    var cart = HttpContext.Session.Get<Dictionary<int, CartItem>>("cart") ??
+                               throw new InvalidOperationException();
+                    if (cart.ContainsKey(productId.Value))
                     {
-                        return NotFound();
+                        var cartItem = cart[productId.Value];
+                        cartItem.Quantity = newQuantity.Value;
+                        product = cartItem.Product;
+                        productTotal = product.Price * cartItem.Quantity;
+                        total = cart.Values.Sum(x => x.Quantity * x.Product.Price);
                     }
                     else
                     {
-                        throw;
+                        throw new KeyNotFoundException();
+                    }
+
+                    HttpContext.Session.Set("cart", cart);
+                }
+                else
+                {
+                    var item = await _shopContext.CartItems.Include(x => x.Product)
+                        .FirstOrDefaultAsync(x => x.ConsumerId == userId && x.ProductId == productId);
+
+                    if (item == null)
+                    {
+                        throw new KeyNotFoundException();
+                    }
+                    else
+                    {
+                        item.Quantity = newQuantity.Value;
+                        product = item.Product;
+                        productTotal = product.Price * item.Quantity;
+                        _shopContext.Update(item);
+                        _shopContext.SaveChanges();
+                        total = _shopContext.CartItems.Where(x => x.ConsumerId == userId)
+                            .Sum(x => x.Quantity * x.Product.Price);
                     }
                 }
-                return PartialView("_Cart");
+
+                return Json(new
+                {
+                    Total = total.ToString("F"), ProductTotal = productTotal.ToString("F"), Quantity = newQuantity.Value
+                });
             }
-            return Error();
+            catch (InvalidOperationException)
+            {
+                return BadRequest();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> ClearCart()
+        private void ClearCart(string userId)
         {
-            _shopContext.CartItems.RemoveRange(_shopContext.CartItems.Where(item=>item.ConsumerId == _userManager.GetUserId(User)).Select(x=>x).ToList());
-            _shopContext.SaveChanges();
-            return RedirectToAction("Index");
+            if (userId == null)
+            {
+                HttpContext.Session.Set<Dictionary<int, CartItem>>("cart", null);
+            }
+            else
+            {
+
+                _shopContext.CartItems.RemoveRange(_shopContext.CartItems.Where(item => item.ConsumerId == userId));
+                _shopContext.SaveChanges();
+            }
         }
 
         private bool CartItemExists(string consumerId, int? productId)
@@ -156,41 +273,111 @@ namespace Online_T_Shirt_Shop.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteFromCart([FromForm(Name = "item.ConsumerId")]string consumerId, [FromForm(Name = "item.ProductId")]int? productId,
-            [Bind("ConsumerId, ProductId, Quantity")]
-            CartItem item)
+        [HttpPost("DeleteFromCart/{productId:int}")]
+        public async Task<IActionResult> DeleteFromCart(int? productId)
         {
-            if (consumerId != item.ConsumerId || productId != item.ProductId)
+            if (productId == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             try
             {
-                _shopContext.CartItems.Remove(item);
-                await _shopContext.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CartItemExists(item.ConsumerId, item.ProductId))
+                var userId = _userManager.GetUserId(User);
+                decimal total;
+                if (userId == null)
                 {
-                    return NotFound();
+                    var cart = HttpContext.Session.Get<Dictionary<int, CartItem>>("cart") ??
+                               throw new InvalidOperationException();
+                    if (cart.ContainsKey(productId.Value))
+                    {
+                        cart.Remove(productId.Value);
+                        total = cart.Values.Sum(x => x.Quantity * x.Product.Price);
+                    }
+                    else
+                    {
+                        throw new KeyNotFoundException();
+                    }
+
+                    HttpContext.Session.Set("cart", cart);
                 }
                 else
                 {
-                    throw;
-                }
-            }
-            return PartialView("_Cart");
+                    var item = await _shopContext.CartItems
+                        .FindAsync(userId, productId);
 
+                    if (item == null)
+                    {
+                        throw new KeyNotFoundException();
+                    }
+                    else
+                    {
+                        _shopContext.Remove(item);
+                        _shopContext.SaveChanges();
+                        total = _shopContext.CartItems.Where(x => x.ConsumerId == userId)
+                            .Sum(x => x.Quantity * x.Product.Price);
+                    }
+                }
+
+                return Json(total);
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Order()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            try
+            {
+                List<OrderProduct> orderProducts;
+                decimal total;
+                if (userId == null)
+                {
+                    var cart = HttpContext.Session.Get<Dictionary<int, CartItem>>("cart") ??
+                               throw new InvalidOperationException();
+
+                    orderProducts = cart.Values
+                        .Select(x => new OrderProduct {ProductId = x.ProductId, Quantity = x.Quantity}).ToList();
+
+                    total = cart.Values.Sum(x => x.Quantity * x.Product.Price);
+                }
+                else
+                {
+                    orderProducts = _shopContext.CartItems.Where(x => x.ConsumerId == userId)
+                        .Select(x => new OrderProduct {ProductId = x.ProductId, Quantity = x.Quantity}).ToList();
+
+                    total = _shopContext.CartItems.Where(x => x.ConsumerId == userId)
+                        .Sum(x => x.Quantity * x.Product.Price);
+                }
+
+                var order = new Order()
+                {
+                    ConsumerId = userId, Date = DateTime.UtcNow, Submission = total, OrderProducts = orderProducts
+                };
+
+                _shopContext.Add(order);
+                _shopContext.SaveChanges();
+
+                ClearCart(userId);
+                return Ok();
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest();
+            }
+        }
     }
-
-
 }

@@ -2,66 +2,80 @@
 @using Online_T_Shirt_Shop.Areas.Identity.Data
 @using Online_T_Shirt_Shop.Data
 
-@{
-    decimal totalPrice = 0;
-}
+@model IEnumerable<CartItem>
 
-@inject ShopContext DbContext
 @inject UserManager<Consumer> UserManager
 
-    <div id="cart-modal" role="dialog" tabindex="-1" class="modal fade show">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">My basket</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-                    @foreach (var item in DbContext.CartItems.Where(item => item.ConsumerId == UserManager.GetUserId(User)))
-                    {
-                        {
-                            DbContext.Entry(item).Reference(e => e.Product).Load();
-                            totalPrice += item.Product.Price * item.Quantity;
-                        }
-                        <div class="row product">
-                            <div class="col-xl-2 text-center"><img src="~/assets/img/product_img/@item.Product.ImagePath" width="100" /></div>
-                            <div class="col-xl-10">
-                                <div class="row">
-                                    <div class="col-xl-3">
-                                        <h1>@item.Product.Name</h1>
-                                    </div>
+@{
+    var total = Model.Sum(x => x.Product.Price * x.Quantity);
+}
 
-                                    <div class="col-auto ml-auto">
-                                        <form class="form-inline cart-form" method="post">
-                                            @Html.HiddenFor(modelItem => item.ConsumerId, new { Value = item.ConsumerId, Id = "consumer-product-" + item.Product.Id})
-                                            @Html.HiddenFor(modelItem => item.ProductId, new { Value = item.ProductId, Id = "product-id-" + item.Product.Id })
-                                            <input id="quantity-@item.ProductId" asp-for="@item.Quantity" class="mt-3 w-100" />
-                                        </form>
+<div id="cart-modal" role="dialog" tabindex="-1" class="cart-modal modal fade show">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <div class="row no-gutters">
+                    <section class="col">
+                        <h1 class="cart-section-header">My Cart</h1>
+                        @foreach (var item in Model)
+                        {
+                            <div id="product-@item.ProductId" class="d-flex flex-row product">
+                                <div class="product-first-part d-flex flex-row">
+                                    <a class="product-img-link" asp-controller="Shop" asp-action="product" asp-route-id="@item.Product.Id">
+                                        <img src="~/assets/img/product_img/@item.Product.ImagePath" alt="Product image" />
+                                    </a>
+
+                                    <div class="d-flex flex-row flex-grow-1 flex-shrink-1">
+                                        <div class="product-info d-flex flex-column flex-grow-1">
+                                            <span class="product-title">@item.Product.Name</span>
+                                            <span>₴@item.Product.Price</span>
+                                            <span>Sex: @item.Product.Sex</span>
+                                            <span>Age: @item.Product.Age</span>
+                                        </div>
+                                        <div>
+                                            <div class="quantity-control-wrapper">
+                                                <button class="quantity-btn" onclick="changeQuantity('#product-@item.ProductId-quantity', 'increase')">+</button>
+                                                <input id="product-@item.ProductId-quantity" class="flex-grow-1" type="number" min="1" value="@item.Quantity" onchange="onQuantityChange(@item.ProductId, '#product-@item.ProductId-quantity', '#product-@item.ProductId-total', '#cart-total', '#cart-subtotal')" />
+                                                <button class="quantity-btn" onclick="changeQuantity('#product-@item.ProductId-quantity', 'decrease')">-</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <h5 class="mt-3">Price: ₴@(item.Product.Price * item.Quantity)</h5>
+                                <div class="product-second-part justify-content-between align-items-start d-flex flex-row flex-grow-1 text-nowrap">
+                                    <div>
+                                        ₴<span id="product-@item.ProductId-total">@(item.Product.Price * item.Quantity)</span>
+                                    </div>
+                                    <button class="remove-btn" onclick="onRemoveClick(@item.ProductId, '#product-@item.ProductId', '#cart-total', '#cart-subtotal')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"><path fill-rule="evenodd" d="M11.077 0L12 .923 6.923 6 12 11.077l-.923.923L6 6.923.923 12 0 11.077 5.076 6 0 .923.923 0 6 5.077 11.077 0z"></path></svg></button>
+                                </div>
+                            </div>
+                        }
+                    </section>
+                    <aside class="col">
+                        <h2 class="cart-section-header mb-8">Order Summary</h2>
+                        <div class="order-summary-list">
+                            <div class="row no-gutters justify-content-between">
+                                <span class="col">Subtotal</span>
+                                <span>₴<span id="cart-subtotal" class="col text-right">@total</span></span>
+                            </div>
+                            <div class="row no-gutters justify-content-between">
+                                <span class="col">Shipping</span>
+                                <span class="col text-right">FREE</span>
                             </div>
                         </div>
-                    }
+                        <div class="total-row row no-gutters justify-content-between">
+                            <span class="col">Total</span>
+                            <span>₴<span id="cart-total" class="col text-right">@total</span></span>
+                        </div>
+                        <div class="checkout-box">
+                            <button class="btn btn-primary" onClick="onOrderClick()">
+                                <svg width="11" height="14" viewBox="0 0 11 14" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor" fill-rule="evenodd"><path d="M0 12.79c0 .558.445 1.01.996 1.01h9.008A1 1 0 0011 12.79V6.01c0-.558-.445-1.01-.996-1.01H.996A1 1 0 000 6.01v6.78z"></path><path d="M9.5 5v-.924C9.5 2.086 7.696.5 5.5.5c-2.196 0-4 1.586-4 3.576V5h1v-.924c0-1.407 1.33-2.576 3-2.576s3 1.17 3 2.576V5h1z" fill-rule="nonzero"></path></g></svg>
+                                Checkout
+                            </button>
+                        </div>
+                    </aside>
                 </div>
-                <div class="modal-footer"><span>Price: ₴@totalPrice</span><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><form asp-action="ClearCart" method="post"><button id="orderBtn" class="btn btn-primary" type="submit">Order</button></form></div>
-            </div>
-        </div>
-        <script src="~/js/cart.js"></script>
-    </div>
-
-
-@*<div class="container">
-        <div class="row">
-            <div class="col-xl-2 text-center"><img src="TwoHandsWhite.jpg" width="100" /></div>
-            <div class="col-xl-10">
-                <div class="row">
-                    <div class="col-xl-3">
-                        <h1>Item Name</h1>
-                    </div>
-                    <div class="col"><button class="btn btn-primary border rounded-0 mb-2 mr-2" type="button">-</button><input type="text" class="mt-3" /><button class="btn btn-primary border rounded-0 mb-2 ml-2" type="button">+</button></div>
-                </div>
-                <h5 class="mt-3">Price:<label> 25.00$</label></h5>
             </div>
         </div>
     </div>
-    <button class="btn btn-primary border rounded-0" type="button">Order</button>*@
+</div>

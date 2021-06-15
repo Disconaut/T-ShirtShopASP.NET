@@ -37,7 +37,7 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                return RedirectToAction("Index", "Shop");
             }
         }
     }

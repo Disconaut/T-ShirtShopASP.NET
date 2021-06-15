@@ -52,6 +52,11 @@ header {
 
 #account-manage {
     max-width: 300px;
+    vertical-align: middle;
+
+    > * {
+        vertical-align: middle;
+    }
 }
 
 .user-panel {

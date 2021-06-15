@@ -46,6 +46,8 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
 
         public string ReturnUrl { get; set; }
 
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
         public class InputModel
         {
             [Required]
@@ -83,6 +85,13 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            returnUrl ??= Url.RouteUrl("default", new { Controller = "Shop", Action = "Index" });
+
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             ReturnUrl = returnUrl;
         }
 
@@ -125,6 +134,8 @@ namespace Online_T_Shirt_Shop.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             return Page();
         }
     }

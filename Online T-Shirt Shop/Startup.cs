@@ -33,7 +33,11 @@ namespace Online_T_Shirt_Shop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession();
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddMvc();
 
             services.AddDbContext<ShopContext>(options =>
@@ -64,6 +68,12 @@ namespace Online_T_Shirt_Shop
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                     options.CallbackPath = new PathString("/account/login/google");
                 });
+
+            services.AddRouting(options =>
+            {
+                options.LowercaseQueryStrings = false;
+                options.LowercaseUrls = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,8 +106,7 @@ namespace Online_T_Shirt_Shop
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseAuthorization();
-
+            app.UseSession();
             
             app.UseEndpoints(endpoints =>
             {
